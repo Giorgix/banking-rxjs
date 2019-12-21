@@ -1,40 +1,29 @@
 import React from 'react';
-import { interval } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { timer, combineLatest } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import Balances from './components/Balances';
 import logo from './logo.svg';
 import './App.css';
 
-class AccountBalances extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      checking: 0,
-      savings: 0
-    };
-  }
+// Updates checking every second
+const checking$ = timer(0, 1000);
 
-  componentDidMount() {
-    interval(1000).pipe(
-      map(value => ({checking: value, savings: value}))
-    ).subscribe(state => this.setState(state))
-  }
+// Updates savings every 5 seconds
+const savings$ = timer(0, 1000 * 5);
 
-  render() {
-    return(
-      <div className="account-info">
-        <p>Checking {this.state.checking}</p>
-        <p>Savings {this.state.savings}</p>
-      </div>
-    );
-  }
-};
+// Combines the two inputs into a single stream
+// combineLatest -> Combines multiple Observables to create an Observable whose values
+// are calculated from the latest values of each of its input Observables.
+const balance$ = combineLatest(checking$, savings$).pipe(tap(console.log));
 
 const App = props => {
+  // Renders the balances component to the DOM and passes the balance$ stream
+  // as props to populate the UI with the illusion of constant cash flow into both accounts
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <AccountBalances />
+        <Balances balance$={balance$} />
       </header>
     </div>
   );
