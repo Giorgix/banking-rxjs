@@ -1,5 +1,6 @@
 import React from 'react';
 import AccountBalance from '../AccountBalance';
+import { distinctUntilChanged, pluck } from 'rxjs/operators';
 
 // Creates a composite class for both accounts
 export default class Balances extends React.Component {
@@ -14,7 +15,10 @@ export default class Balances extends React.Component {
   componentDidMount() {
 
     // Subscribes to updates on the balances
-    this.props.balance$.subscribe(([checking, savings]) => {
+    this.props.appState$.pipe(
+      distinctUntilChanged('accounts'),
+      pluck('accounts'),
+    ).subscribe(({checking, savings}) => {
       this.setState({checking, savings})
     });
   }
