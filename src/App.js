@@ -20,9 +20,8 @@ import './App.css';
 
 const store = configureStore();
 const store$ = createStreamFromStore(store);
-const action = withdraw({amount: 80, account: 'checking'});
+const action = withdraw({amount: 20, account: 'checking'});
 store.dispatch(action);
-console.log(store.getState());
 
 const App = props => {
   // Renders the balances component to the DOM and passes the balance$ stream
@@ -31,7 +30,7 @@ const App = props => {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <Balances appState$={store$}/>
+        <Balances appState$={store$} dispatch={store.dispatch}/>
       </header>
     </div>
   );

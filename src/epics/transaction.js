@@ -1,19 +1,6 @@
 import { iif, of, throwError } from 'rxjs';
+import { ofType } from 'redux-observable';
 import { map, timestamp, mergeMap, mapTo, catchError, filter, tap } from 'rxjs/operators';
-
-/*Subject.prototype.ofType = function (...types) {
-    const len = types.length;
-    return this.filter(({type}) => {
-        switch (len) {
-            case 0:
-                throw new Error('Must specify at least one type!');
-            case 1:
-                return type === types[0];
-            default:
-                return types.indexOf(type) > -1;
-        }
-    });
-};*/
 
 class Transaction {
     constructor(account, amount, balance, timestamp) {
@@ -32,7 +19,7 @@ const overdraftValidator = (transaction) =>
 
 // Epics take a stream of actions in and return a stream of actions out
 export default action$ => action$.pipe(
-        filter(action => action.type === 'WITHDRAW' || action.type === 'DEPOSIT'),
+        ofType('WITHDRAW', 'DEPOSIT'),
         timestamp(),
         map(obj => ({...obj.value, timestamp: obj.timestamp})),
         tap(console.log),
