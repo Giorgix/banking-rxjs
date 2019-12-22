@@ -39,9 +39,10 @@ export default class Transactions extends React.Component {
           <td className="valign-wrapper">{transaction.type} {this.isWithdraw(transaction)
             ? <i className="material-icons red-text text-darken-4">arrow_back</i>
             : <i className="material-icons green-text">arrow_forward</i>}</td>
+          <td>{new Date(transaction.timestamp).toLocaleString('es-es')}</td>
           <td>{transaction.account}</td>
           <td>{this.parseAmount(transaction)}</td>
-          <td>{new Date(transaction.timestamp).toLocaleString('es-es')}</td>
+          <td>{transaction.balance.toFixed(2)}</td>
         </tr>
       );
     })
@@ -56,9 +57,10 @@ export default class Transactions extends React.Component {
         <tr>
           <th>#</th>
           <th>Type</th>
+          <th>Date</th>
           <th>Account</th>
           <th>Amount</th>
-          <th>Date</th>
+          <th>Current Balance</th>
         </tr>
       </thead>
       <tbody>

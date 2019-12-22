@@ -15,15 +15,23 @@ class Transaction {
 const validate = (validator, onFail) => (transaction) =>
     iif(() => validator(transaction), of(transaction), onFail);
 
-const overdraftValidator = (transaction) =>
-    transaction.balance > 0 || transaction.amount > 0;
+const overdraftValidator = (transaction) => {
+    console.log('validating..', transaction);
+    return transaction.balance > 0;
+}
 
 // Epics take a stream of actions in and return a stream of actions out
-export default action$ => action$.pipe(
+export default (action$, state$) => action$.pipe(
         ofType('WITHDRAW', 'DEPOSIT'),
         timestamp(),
-        map(obj => ({...obj.value, timestamp: obj.timestamp})),
-        tap(console.log),
+        map(obj => ({...obj.value, timestamp: obj.timestamp,})),
+        map(action => {
+            const {accounts} = state$.value;
+            return {
+                ...action,
+                balance: accounts[action.account]
+            }
+        }),
         map(datedAction => (
             new Transaction(
                 datedAction.account,
@@ -35,12 +43,11 @@ export default action$ => action$.pipe(
         )),
         mergeMap(datedTransaction =>
             validate(overdraftValidator, throwError('OVERDRAFT'))(datedTransaction).pipe(
-                tap(console.log),
                 mapTo({type: 'ADD_TRANSACTION', datedTransaction}),
 
                 // Dispatches instead an error action to the store to signal to the user that an error has occurred
                 catchError(err => {
-                    return of({type: 'LOG', payload: `Transacxtion write failure: ${err.message}`})
+                    return of({type: 'LOG', payload: `Transacxtion write failure: ${err}`})
                 })
             )
         )
