@@ -1,5 +1,9 @@
-import { createStore } from 'redux'
-import reducer from '../reducers';
+import { createStore, applyMiddleware, compose } from 'redux';
+import { createEpicMiddleware } from 'redux-observable';
+import { rootEpic, rootReducer } from '../modules/root';
+
+const epicMiddleware = createEpicMiddleware();
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const initialState = {
     accounts: {
@@ -7,6 +11,18 @@ const initialState = {
         savings: 100
     },
     transactions: []
-};
+}
 
-export default createStore(reducer, initialState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+export default function configureStore() {
+  const store = createStore(
+    rootReducer,
+    initialState,
+    composeEnhancers(
+        applyMiddleware(epicMiddleware)
+    ),
+  );
+
+  epicMiddleware.run(rootEpic);
+
+  return store;
+}

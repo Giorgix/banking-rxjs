@@ -31,20 +31,10 @@ const overdraftValidator = (transaction) =>
     transaction.balance > 0 || transaction.amount > 0;
 
 // Epics take a stream of actions in and return a stream of actions out
-export default function transactionLogEpic(action$, store) {
-
-    // Convenient new operator implemented to filter incoming actions
-    //based on type (analogous to how reducers work on action.type).
-    return action$.pipe(
+export default action$ => action$.pipe(
         filter(action => action.type === 'WITHDRAW' || action.type === 'DEPOSIT'),
         timestamp(),
         map(obj => ({...obj.value, timestamp: obj.timestamp})),
-        map(action => ({
-            ...action,
-
-            // Gets a snapshot of the current state of the store and updates the targeted account
-            balance: store.getState().accounts[action.account] - action.amount
-        })),
         tap(console.log),
         map(datedAction => (
             new Transaction(
@@ -65,5 +55,4 @@ export default function transactionLogEpic(action$, store) {
                 })
             )
         )
-    );
-}
+);

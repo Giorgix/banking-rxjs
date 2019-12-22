@@ -2,7 +2,8 @@ import * as R from 'ramda';
 
 
 // Utilities to make it easier to access certain values
-const accountsLens = R.lensProp('accounts');
+const checkingLens = R.lensProp('accounts.checking');
+const savingsLens = R.lensProp('accounts.savings');
 const messagesLens = R.lensProp('messages');
 const resultsLens = R.lensProp('results');
 const transactionsLens = R.lensProp('transactions');
@@ -25,6 +26,7 @@ export default function reducer (state = {
             return {
                 ...state,
                 accounts: {
+                    ...state.accounts,
                     [action.account]: state.accounts[action.account] - parseFloat(action.amount)
                 }
             };
@@ -33,6 +35,7 @@ export default function reducer (state = {
             return {
                 ...state,
                 accounts: {
+                    ...state.accounts,
                     [action.account]: state.accounts[action.account] + parseFloat(action.amount)
                 }
             }
