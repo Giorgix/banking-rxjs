@@ -6,6 +6,7 @@ import { tap } from 'rxjs/operators';
 
 // Components
 import Balances from './components/Balances';
+import Transactions from './components/Transactions';
 
 // Redux
 import configureStore from './redux-store/store.js';
@@ -30,8 +31,13 @@ const App = props => {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <Balances appState$={store$} dispatch={store.dispatch}/>
       </header>
+      <main>
+        <Balances appState$={store$} dispatch={store.dispatch}/>
+        <div className="container">
+          <Transactions appState$={store$} dispatch={store.dispatch}/>
+        </div>
+      </main>
     </div>
   );
 }

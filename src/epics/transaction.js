@@ -3,10 +3,11 @@ import { ofType } from 'redux-observable';
 import { map, timestamp, mergeMap, mapTo, catchError, filter, tap } from 'rxjs/operators';
 
 class Transaction {
-    constructor(account, amount, balance, timestamp) {
+    constructor(account, amount, balance, type, timestamp) {
         this.account = account;
         this.amount = amount;
         this.balance = balance;
+        this.type = type;
         this.timestamp = timestamp;
     }
 }
@@ -28,6 +29,7 @@ export default action$ => action$.pipe(
                 datedAction.account,
                 datedAction.amount,
                 datedAction.balance,
+                datedAction.type,
                 datedAction.timestamp
             )
         )),

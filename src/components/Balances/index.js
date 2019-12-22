@@ -28,9 +28,9 @@ export default class Balances extends React.Component {
 
     // Renders the component as the composition of two subcomponents
     return(
-      <div className="account-info">
-        <AccountBalance name="Checking" value={checking} {...this.props}/>
-        <AccountBalance name="Savings" value={savings} {...this.props}/>
+      <div className="account-info row">
+        <AccountBalance {...this.props} name="Checking" value={checking} />
+        <AccountBalance {...this.props} name="Savings" value={savings} />
       </div>
     )
   }
