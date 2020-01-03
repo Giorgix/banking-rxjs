@@ -1,7 +1,6 @@
 import React from 'react';
 //import Transaction from '../Transaction';
 import { distinctUntilChanged, pluck } from 'rxjs/operators';
-import transaction from '../../epics/transaction';
 
 // Creates a composite class for both accounts
 export default class Transactions extends React.Component {
@@ -36,12 +35,12 @@ export default class Transactions extends React.Component {
       return (
         <tr key={transaction.timestamp}>
           <td>{index + 1}</td>
-          <td className="valign-wrapper">{transaction.type} {this.isWithdraw(transaction)
+          <td className="valign-wrapper"><strong>{transaction.type}</strong> {this.isWithdraw(transaction)
             ? <i className="material-icons red-text text-darken-4">arrow_back</i>
             : <i className="material-icons green-text">arrow_forward</i>}</td>
           <td>{new Date(transaction.timestamp).toLocaleString('es-es')}</td>
           <td>{transaction.account}</td>
-          <td>{this.parseAmount(transaction)}</td>
+          <td><strong>{this.parseAmount(transaction)}</strong></td>
           <td>{transaction.balance.toFixed(2)}</td>
         </tr>
       );

@@ -4,10 +4,7 @@ import * as R from 'ramda';
 // Utilities to make it easier to access certain values
 const checkingLens = R.lensProp('accounts.checking');
 const savingsLens = R.lensProp('accounts.savings');
-const messagesLens = R.lensProp('messages');
-const resultsLens = R.lensProp('results');
 const transactionsLens = R.lensProp('transactions');
-const queryLens = R.lensProp('query');
 
 
 export default function reducer (state = {

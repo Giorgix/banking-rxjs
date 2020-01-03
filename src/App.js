@@ -1,9 +1,5 @@
 import React from 'react';
 
-// RxJS
-import { timer, combineLatest } from 'rxjs';
-import { tap } from 'rxjs/operators';
-
 // Components
 import Balances from './components/Balances';
 import Transactions from './components/Transactions';

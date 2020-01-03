@@ -1,6 +1,6 @@
 import { iif, of, throwError } from 'rxjs';
 import { ofType } from 'redux-observable';
-import { map, timestamp, mergeMap, mapTo, catchError, filter, tap } from 'rxjs/operators';
+import { map, timestamp, mergeMap, mapTo, catchError } from 'rxjs/operators';
 
 class Transaction {
     constructor(account, amount, balance, type, timestamp) {
@@ -17,7 +17,7 @@ const validate = (validator, onFail) => (transaction) =>
 
 const overdraftValidator = (transaction) => {
     console.log('validating..', transaction);
-    return transaction.balance > 0;
+    return transaction.balance >= 0;
 }
 
 // Epics take a stream of actions in and return a stream of actions out

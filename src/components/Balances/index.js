@@ -8,7 +8,7 @@ export default class Balances extends React.Component {
     super(props);
     this.state = {
       checking: 0,
-      savings: 0
+      savings: 0,
     };
   }
 
@@ -23,14 +23,19 @@ export default class Balances extends React.Component {
     });
   }
 
+  onChange(e) {
+    console.log('change input... ', e.target.value);
+    
+  }
+
   render() {
     const { checking, savings } = this.state;
 
     // Renders the component as the composition of two subcomponents
     return(
       <div className="account-info row">
-        <AccountBalance {...this.props} name="Checking" value={checking} />
-        <AccountBalance {...this.props} name="Savings" value={savings} />
+        <AccountBalance onChange={this.onChange} {...this.props} name="Checking" value={checking} />
+        <AccountBalance onChange={this.onChange} {...this.props} name="Savings" value={savings} />
       </div>
     )
   }

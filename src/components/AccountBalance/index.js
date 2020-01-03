@@ -8,6 +8,10 @@ export default function AccountBalance (props) {
   return(
     <div className="col s12 m6">
       <h3>{props.name}: {props.value.toFixed(2)} USD</h3>
+      <div className="input-field">
+        <input placeholder="25" name="amount" type="number" className="validate" onChange={props.onChange} />
+        <label for="amount">Amount</label>
+      </div>
       <button className="waves-effect waves-light btn"
         onClick={() =>
           props.dispatch(withdraw(
