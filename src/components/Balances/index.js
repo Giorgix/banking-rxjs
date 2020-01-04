@@ -15,7 +15,7 @@ export default function Balances (props) {
       setChecking(checking);
       setSavings(savings);
     });
-  })
+  });
 
   function onChange(e) {
     console.log('change input... ', e.target.value);
