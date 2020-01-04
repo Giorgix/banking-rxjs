@@ -1,5 +1,6 @@
 import React from 'react';
 import withdraw from '../../actions/withdraw';
+import deposit from '../../actions/deposit';
 /**
  * Creates a simple  function component that formats its input
  * @param {Object} props
@@ -22,6 +23,16 @@ export default function AccountBalance (props) {
           ))
         }
       ><i className="material-icons right">add</i>Take out $10 from {props.name}</button>
+      <button className="waves-effect waves-light btn"
+        onClick={() =>
+          props.dispatch(deposit(
+            {
+              amount: 10,
+              account: props.name.toLowerCase()
+            }
+          ))
+        }
+      ><i className="material-icons right">add</i>Add $10 to {props.name}</button>
     </div>
   );
 }
