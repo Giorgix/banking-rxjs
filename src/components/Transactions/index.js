@@ -11,9 +11,7 @@ const Transactions = props => {
     props.appState$.pipe(
       distinctUntilChanged('transactions'),
       pluck('transactions'),
-    ).subscribe(transactions => {
-      setTransactions(transactions)
-    });
+    ).subscribe(setTransactions);
   })
 
   function isWithdraw(transaction) {
