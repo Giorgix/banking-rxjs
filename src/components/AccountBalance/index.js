@@ -1,6 +1,5 @@
 import React from 'react';
-import withdraw from '../../actions/withdraw';
-import deposit from '../../actions/deposit';
+import { withdraw, deposit } from '../../actions';
 /**
  * Creates a simple  function component that formats its input
  * @param {Object} props
@@ -18,7 +17,7 @@ export default function AccountBalance (props) {
           props.dispatch(withdraw(
             {
               amount: 10,
-              account: props.name.toLowerCase()
+              accountName: props.name
             }
           ))
         }
@@ -28,7 +27,7 @@ export default function AccountBalance (props) {
           props.dispatch(deposit(
             {
               amount: 10,
-              account: props.name.toLowerCase()
+              accountName: props.name
             }
           ))
         }

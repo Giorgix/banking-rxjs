@@ -1,4 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux';
+import thunkMiddleware from 'redux-thunk';
 import { createEpicMiddleware } from 'redux-observable';
 import { rootEpic, rootReducer } from '../modules/root';
 
@@ -10,7 +11,9 @@ const initialState = {
         checking: 100,
         savings: 100
     },
-    transactions: []
+    transactions: [],
+    isFetching: true,
+    didInvalidate: false
 }
 
 export default function configureStore() {
@@ -18,7 +21,10 @@ export default function configureStore() {
     rootReducer,
     initialState,
     composeEnhancers(
-        applyMiddleware(epicMiddleware)
+        applyMiddleware(
+          thunkMiddleware, // lets us dispatch() functions
+          epicMiddleware
+        )
     ),
   );
 

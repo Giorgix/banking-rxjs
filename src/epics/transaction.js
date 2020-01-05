@@ -29,12 +29,12 @@ export default (action$, state$) => action$.pipe(
             const {accounts} = state$.value;
             return {
                 ...action,
-                balance: accounts[action.account]
+                balance: accounts.find((account) => account.alias === action.accountName).balance || 0
             }
         }),
         map(datedAction => (
             new Transaction(
-                datedAction.account,
+                datedAction.accountName,
                 datedAction.amount,
                 datedAction.balance,
                 datedAction.type,

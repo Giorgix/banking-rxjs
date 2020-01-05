@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-
+import {RECEIVE_ACCOUNTS, REQUEST_ACCOUNTS} from '../actions';
 
 // Utilities to make it easier to access certain values
 const checkingLens = R.lensProp('accounts.checking');
@@ -14,31 +14,47 @@ export default function reducer (state = {
     },
     transactions: []
 }, action) {
+
+    const chosenAccountIndex = R.findIndex(
+        R.propEq('alias', action.accountName)
+    )(state.accounts);
+    let newState = {};
+
     switch (action.type) {
         case 'LOG':
             console.log(`LOG: ${action.payload}`);
             return state;
         case 'WITHDRAW':
             console.log('Withdrawing...');
-            return {
+            newState = {
                 ...state,
-                accounts: {
-                    ...state.accounts,
-                    [action.account]: state.accounts[action.account] - parseFloat(action.amount)
-                }
             };
+            newState.accounts[chosenAccountIndex].balance -= parseFloat(action.amount);
+            return newState;
         case 'DEPOSIT':
-                console.log('Depositing...');
-            return {
+            console.log('Depositing...');
+            newState = {
                 ...state,
-                accounts: {
-                    ...state.accounts,
-                    [action.account]: state.accounts[action.account] + parseFloat(action.amount)
-                }
-            }
+            };
+            newState.accounts[chosenAccountIndex].balance += parseFloat(action.amount);
+            return newState;
         case 'ADD_TRANSACTION':
             console.log('Adding transaction', action);
             return R.over(transactionsLens, R.prepend(action.datedTransaction), state);
+        case REQUEST_ACCOUNTS:
+            return {
+                ...state,
+                isFetching: true,
+                didInvalidate: false
+            }
+        case RECEIVE_ACCOUNTS:
+            return {
+                ...state,
+                isFetching: false,
+                didInvalidate: false,
+                accounts: action.accounts,
+                lastUpdated: action.receivedAt
+            }
         default:
             return state;
     }
