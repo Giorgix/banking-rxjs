@@ -8,19 +8,18 @@ export default curry((url, mapper, BaseComponent) => props => {
     const initialState = merge(props, status);
     const [data, changeState] = useState(initialState);
 
-    const fetchData = async () => {
-        await delay(Math.trunc(Math.random() * (3000 - 250) + 250));
-        await fetch(url(props))
-            .then(res => res.json())
-            .then(mapper)
-            .then(merge({loading: false, completed: true}))
-            .then(console.log)
-            .then(changeState)
-    }
-
     useEffect(() => {
+        const fetchData = async () => {
+            await delay(Math.trunc(Math.random() * (3000 - 250) + 250));
+            await fetch(url(props))
+                .then(res => res.json())
+                .then(mapper)
+                .then(merge({loading: false, completed: true}))
+                .then(console.log)
+                .then(changeState)
+        }
         fetchData()
-    }, []);
+    }, [data, props]);
 
     return <BaseComponent {...props} {...data} />;
 });
