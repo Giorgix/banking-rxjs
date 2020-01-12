@@ -12,7 +12,7 @@ const Transactions = props => {
       distinctUntilChanged('transactions'),
       pluck('transactions'),
     ).subscribe(setTransactions);
-  })
+  }, [props.appState$, setTransactions]);
 
   function isWithdraw(transaction) {
     return transaction.type === 'WITHDRAW';
