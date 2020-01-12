@@ -4,34 +4,34 @@ import { withdraw, deposit } from '../../actions';
  * Creates a simple  function component that formats its input
  * @param {Object} props
  */
-export default function AccountBalance (props) {
+export default function AccountBalance ({alias, balance, dispatch, onChange}) {
   return(
     <div className="col s12 m6">
-      <h3>{props.name}: {props.value.toFixed(2)} USD</h3>
+      <h3>{alias}: {balance.toFixed(2)} USD</h3>
       <div className="input-field">
-        <input placeholder="25" name="amount" type="number" className="validate" onChange={props.onChange} />
+        <input placeholder="25" name="amount" type="number" className="validate" onChange={onChange} />
         <label for="amount">Amount</label>
       </div>
       <button className="waves-effect waves-light btn"
         onClick={() =>
-          props.dispatch(withdraw(
+          dispatch(withdraw(
             {
               amount: 10,
-              accountName: props.name
+              accountName: alias
             }
           ))
         }
-      ><i className="material-icons right">add</i>Take out $10 from {props.name}</button>
+      ><i className="material-icons right">add</i>Take out $10 from {alias}</button>
       <button className="waves-effect waves-light btn"
         onClick={() =>
-          props.dispatch(deposit(
+          dispatch(deposit(
             {
               amount: 10,
-              accountName: props.name
+              accountName: alias
             }
           ))
         }
-      ><i className="material-icons right">add</i>Add $10 to {props.name}</button>
+      ><i className="material-icons right">add</i>Add $10 to {alias}</button>
     </div>
   );
 }
