@@ -7,31 +7,17 @@ import { withdraw, deposit } from '../../actions';
 export default function AccountBalance ({alias, balance, dispatch, onChange}) {
   return(
     <div className="col s12 m6">
-      <h3>{alias}: {balance.toFixed(2)} USD</h3>
-      <div className="input-field">
-        <input placeholder="25" name="amount" type="number" className="validate" onChange={onChange} />
-        <label for="amount">Amount</label>
+      <div className="card horizontal">
+        <div className="card-stacked">
+          <div className="card-content">
+            <h3>{alias}</h3>
+            <h4>{balance.toFixed(2)} USD</h4>
+          </div>
+          <div className="card-action">
+            <a className="blue-text text-darken-2" href="#">Account detail</a>
+          </div>
+        </div>
       </div>
-      <button className="waves-effect waves-light btn"
-        onClick={() =>
-          dispatch(withdraw(
-            {
-              amount: 10,
-              accountName: alias
-            }
-          ))
-        }
-      ><i className="material-icons right">add</i>Take out $10 from {alias}</button>
-      <button className="waves-effect waves-light btn"
-        onClick={() =>
-          dispatch(deposit(
-            {
-              amount: 10,
-              accountName: alias
-            }
-          ))
-        }
-      ><i className="material-icons right">add</i>Add $10 to {alias}</button>
     </div>
   );
 }
