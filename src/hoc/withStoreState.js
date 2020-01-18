@@ -1,8 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {curry, merge} from 'ramda';
-import { distinctUntilChanged, pluck, map, tap } from 'rxjs/operators';
 
-export default curry((store, BaseComponent) => props => {
+export default curry((store, pipeOperators, BaseComponent) => props => {
 
     const [data, setData] = useState({
         isFetching: true,
@@ -11,6 +10,7 @@ export default curry((store, BaseComponent) => props => {
 
     useEffect(() => {
       const subscription = store.pipe(
+        ...pipeOperators,
         //distinctUntilChanged('accounts'),
         //tap(console.log),
         //pluck('accounts'),
