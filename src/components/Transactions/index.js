@@ -1,18 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 //import Transaction from '../Transaction';
-import { distinctUntilChanged, pluck } from 'rxjs/operators';
 
 // Creates a function component to hold the transactions state from the redux store
-const Transactions = props => {
-  const [transactions, setTransactions] = useState([]);
-
-  useEffect(() => {
-    // Subscribes to updates on the balances
-    props.appState$.pipe(
-      distinctUntilChanged('transactions'),
-      pluck('transactions'),
-    ).subscribe(setTransactions);
-  }, [props.appState$, setTransactions]);
+const Transactions = ({transactions}) => {
 
   function isWithdraw(transaction) {
     return transaction.type === 'WITHDRAW';
