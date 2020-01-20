@@ -6,7 +6,7 @@ const computeInterest = p => 1 / 10 / 365 * p;
 export default (action$, state$) => interval(15 * 1000).pipe(
         map(() => ({
             type: 'DEPOSIT',
-            accountName: 'Cuenta Ahorro',
+            accountId: 2,
             amount: computeInterest(state$.value.accounts[1].balance)
         }))
 );

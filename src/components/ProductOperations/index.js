@@ -11,9 +11,9 @@ export default function ProductOperations (props) {
   const [transferAmount, setTransferAmount] = useState(0);
 
   const accountOptionsFiltered = (selected = fromSelected) =>
-    props.accounts.filter(account => account.alias !== selected).map(account => {
+    props.accounts.filter(account => parseInt(account.id) !== parseInt(selected)).map(account => {
     return (
-      <option key={account.id} value={account.alias}>{account.alias}</option>
+      <option key={account.id} value={account.id}>{account.alias}</option>
     )
   });
 
@@ -21,13 +21,13 @@ export default function ProductOperations (props) {
     props.dispatch(withdraw(
       {
         amount: parseFloat(transferAmount),
-        accountName: fromSelected
+        accountId: fromSelected
       }
     ));
     props.dispatch(deposit(
       {
         amount: parseFloat(transferAmount),
-        accountName: toSelected
+        accountId: toSelected
       }
     ));
   }

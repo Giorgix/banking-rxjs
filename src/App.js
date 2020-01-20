@@ -37,7 +37,8 @@ const withPickedProps = curry((propsToPick, BaseComponent) => props => {
 
 const enhaceAccount = compose(
   withStoreState(store$, [distinctUntilChanged('accounts')]),
-  withPickedProps(['accounts', 'isFetching', 'lastUpdated']),
+  withDispatcher(store.dispatch),
+  withPickedProps(['accounts', 'isFetching', 'dispatch', 'lastUpdated']),
   branch(prop('isFetching'), Spinner),
   toList({className: 'accounts-list row'}),
 );
