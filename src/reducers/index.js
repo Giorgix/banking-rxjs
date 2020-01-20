@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import {RECEIVE_ACCOUNTS_FULLFILLED, REQUEST_ACCOUNTS} from '../actions';
+import {RECEIVE_ACCOUNTS_FULLFILLED, REQUEST_ACCOUNTS, REQUEST_ACCOUNT, RECEIVE_ACCOUNT_FULLFILLED} from '../actions';
 
 // Utilities to make it easier to access certain values
 const checkingLens = R.lensProp('accounts.checking');
@@ -14,9 +14,8 @@ export default function reducer (state = {
     },
     transactions: []
 }, action) {
-
     const chosenAccountIndex = R.findIndex(
-        R.propEq('alias', action.accountName)
+        R.propEq('id', parseInt(action.accountId))
     )(state.accounts);
     let newState = {};
 
@@ -47,12 +46,34 @@ export default function reducer (state = {
                 isFetching: true,
                 didInvalidate: false
             }
+        case REQUEST_ACCOUNT:
+            return {
+                ...state,
+                isFetching: true,
+                didInvalidate: false
+            }
         case RECEIVE_ACCOUNTS_FULLFILLED:
             return {
                 ...state,
                 isFetching: false,
                 didInvalidate: false,
                 accounts: action.accounts,
+                lastUpdated: action.receivedAt
+            }
+        case RECEIVE_ACCOUNT_FULLFILLED:
+
+            const accountIndex = R.findIndex(
+                R.propEq('id', parseInt(action.account.id))
+            )(state.accounts);
+
+            newState = {
+                ...state,
+            };
+            newState.accounts[accountIndex]= action.account;
+            return {
+                ...newState,
+                isFetching: false,
+                didInvalidate: false,
                 lastUpdated: action.receivedAt
             }
         default:
