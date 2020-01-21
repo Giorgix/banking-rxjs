@@ -15,7 +15,7 @@ export default function reducer (state = {
     transactions: []
 }, action) {
     const chosenAccountIndex = R.findIndex(
-        R.propEq('id', parseInt(action.accountId))
+        R.propEq('id', action.accountId)
     )(state.accounts);
     let newState = {};
 
@@ -63,7 +63,7 @@ export default function reducer (state = {
         case RECEIVE_ACCOUNT_FULLFILLED:
 
             const accountIndex = R.findIndex(
-                R.propEq('id', parseInt(action.account.id))
+                R.propEq('id', action.account.id)
             )(state.accounts);
 
             newState = {
