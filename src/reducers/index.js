@@ -21,8 +21,8 @@ export default function reducer (state = {
 
     switch (action.type) {
         case 'LOG':
-            console.log(`LOG: ${action.payload}`);
-            return state;
+
+        return state;
         case 'WITHDRAW':
             console.log('Withdrawing...');
             newState = {

@@ -49,7 +49,6 @@ store.dispatch({type: 'REQUEST_ACCOUNTS'});
 const authObservable$ = authState(firebaseApp.auth())
 
 const withPickedProps = curry((propsToPick, BaseComponent) => props => {
-  console.log('original props: ', props)
   const newProps = pick(propsToPick, props);
   return <BaseComponent {...newProps} />;
 })
