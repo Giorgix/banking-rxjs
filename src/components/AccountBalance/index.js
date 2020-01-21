@@ -4,7 +4,7 @@ import { withdraw, deposit } from '../../actions';
  * Creates a simple  function component that formats its input
  * @param {Object} props
  */
-export default function AccountBalance ({alias, balance, dispatch, onChange}) {
+export default function AccountBalance ({alias, balance, id, dispatch, onChange}) {
   return(
     <div className="col s12 m6">
       <div className="card horizontal">
@@ -14,7 +14,12 @@ export default function AccountBalance ({alias, balance, dispatch, onChange}) {
             <h4>{balance.toFixed(2)} USD</h4>
           </div>
           <div className="card-action">
-            <a className="blue-text text-darken-2" href="#">Account detail</a>
+          <a
+            class="waves-effect waves-light btn-small"
+            onClick={() => dispatch({type: 'REQUEST_ACCOUNT', accountId: id})}
+          >
+            <i class="material-icons left">autorenew</i>Update
+          </a>
           </div>
         </div>
       </div>

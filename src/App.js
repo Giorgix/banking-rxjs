@@ -4,7 +4,7 @@ import React from 'react';
 import { compose, prop, curry, pick } from 'ramda';
 
 // RxJS
-import { distinctUntilChanged } from 'rxjs/operators';
+import { distinctUntilChanged, filter } from 'rxjs/operators';
 
 // Components
 //import Balances from './components/Balances';
@@ -16,19 +16,37 @@ import ProductOperations from './components/ProductOperations';
 // Redux
 import configureStore from './redux-store/store.js';
 
+// Firebase
+import { authState } from 'rxfire/auth';
+import {firebaseApp} from './firebase';
+
 // Utils
 import createStreamFromStore from './utils/createStreamFromStore';
 
 // HOC
-import {branch, withStoreState, toList, withDispatcher} from './hoc';
+import {branch, withStoreState, toList, withDispatcher, withUserState} from './hoc';
 
 // Assets
 import logo from './logo.svg';
 import './App.css';
 
+//initFirebase();
+firebaseApp.auth().signInWithEmailAndPassword('jorgemdramos@gmail.com', '11223344').catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  console.log('AUTH ERROR! ', errorCode, errorMessage)
+  // ...
+});
+
+//writeUserData('eop5emva3sfKnewQdYuIXvZ99G13', 'Paco', 'email@email.com', 'img.jpg');
+
 const store = configureStore();
 const store$ = createStreamFromStore(store);
 store.dispatch({type: 'REQUEST_ACCOUNTS'});
+
+// AUTH
+const authObservable$ = authState(firebaseApp.auth())
 
 const withPickedProps = curry((propsToPick, BaseComponent) => props => {
   const newProps = pick(propsToPick, props);
@@ -37,7 +55,9 @@ const withPickedProps = curry((propsToPick, BaseComponent) => props => {
 
 const enhaceAccount = compose(
   withStoreState(store$, [distinctUntilChanged('accounts')]),
-  withPickedProps(['accounts', 'isFetching', 'lastUpdated']),
+  withDispatcher(store.dispatch),
+  withUserState(authObservable$),
+  withPickedProps(['accounts', 'isFetching', 'dispatch', 'lastUpdated', 'user']),
   branch(prop('isFetching'), Spinner),
   toList({className: 'accounts-list row'}),
 );

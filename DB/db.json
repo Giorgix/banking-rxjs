@@ -1,19 +1,16 @@
 {
-    "accounts": {
-        "data": [
-            {
-                "id": 1,
-                "alias": "Cuenta 123",
-                "type": "savings",
-                "balance": 1500
-            },
-            {
-                "id": 2,
-                "alias": "Cuenta Ahorro",
-                "type": "checking",
-                "balance": 4500
-            }
-        ],
-        "totalBalance": 6000
+  "accounts": [
+    {
+      "id": 1,
+      "alias": "Cuenta nueva",
+      "type": "savings",
+      "balance": 1670
+    },
+    {
+      "id": 2,
+      "alias": "Cuenta Ahorro",
+      "type": "checking",
+      "balance": 4500
     }
+  ]
 }
