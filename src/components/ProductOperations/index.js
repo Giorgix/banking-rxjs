@@ -8,7 +8,7 @@ export default function ProductOperations (props) {
 
   const [fromSelected, setFromselected] = useState('');
   const [toSelected, setToselected] = useState('');
-  const [transferAmount, setTransferAmount] = useState(0);
+  const [transferAmount, setTransferAmount] = useState('');
 
   const accountOptionsFiltered = (selected = fromSelected) =>
     props.accounts.filter(account => parseInt(account.id) !== parseInt(selected)).map(account => {
@@ -55,8 +55,8 @@ export default function ProductOperations (props) {
         </select>
       </div>
       <div className="input-field col s12">
-        <input placeholder="25" value={transferAmount} name="amount" type="number" className="validate" onChange={(e) => setTransferAmount(e.target.value)} />
-        <label for="amount">Amount</label>
+        <input placeholder="25" id="transfer_amount" value={transferAmount} type="number" className="validate" onChange={(e) => setTransferAmount(e.target.value)} />
+        <label htmlFor="transfer_amount">Amount</label>
       </div>
       <button className="waves-effect waves-light btn" onClick={transfer}
       ><i className="material-icons right">add</i>Transfer ${transferAmount} from {fromSelected} to {toSelected}</button>
