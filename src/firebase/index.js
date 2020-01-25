@@ -19,12 +19,23 @@ var firebaseConfig = {
     measurementId: "G-QWLTW1CKNZ"
 };
 
-export const firebaseApp = firebase.initializeApp(firebaseConfig);
-firebaseApp.analytics();
+
+try {
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+} catch (err) {
+    // we skip the "already exists" message which is
+    // not an actual error when we're hot-reloading
+    if (!/already exists/.test(err.message)) {
+      console.error('Firebase initialization error', err.stack)
+    }
+}
 
 // DATABASE
-export const db = firebaseApp.firestore();
-export const firebaseAuth = firebaseApp.auth();
+export const db = firebase.firestore();
+export const firebaseAuth = firebase.auth();
+
+
 // AUTH
 
 

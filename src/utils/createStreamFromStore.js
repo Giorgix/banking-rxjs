@@ -3,6 +3,8 @@ import { map, publishBehavior, refCount } from 'rxjs/operators';
 
 // Turn the from observable into a ConnectableObservable (hot)
 export default function createStreamFromStore(store) {
+    console.log('store from utils: ', store);
+    
     return from(store).pipe(
 
         // store.getState() is called twice, so that subscribers always receive

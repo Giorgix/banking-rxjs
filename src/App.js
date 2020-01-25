@@ -1,5 +1,4 @@
 import React from 'react';
-
 // Ramda
 import { compose, prop } from 'ramda';
 
@@ -12,7 +11,6 @@ import Transactions from './components/Transactions';
 import Spinner from './components/Spinner';
 import AccountBalance from './components/AccountBalance';
 import ProductOperations from './components/ProductOperations';
-import NavBar from './components/NavBar';
 
 // Redux
 import configureStore from './redux-store/store.js';
@@ -35,7 +33,7 @@ import {
 } from './hoc';
 
 // Assets
-import './App.css';
+//import './App.css';
 
 //initFirebase();
 
@@ -49,6 +47,7 @@ firebaseAuth.signInWithEmailAndPassword('jorgemdramos@gmail.com', '11223344').ca
   // ...
 });
 const store = configureStore();
+console.log('store: ', store)
 const store$ = createStreamFromStore(store);
 store.dispatch({type: 'REQUEST_ACCOUNTS'});
 
@@ -88,19 +87,16 @@ const Accounts = enhaceAccount(AccountBalance);
 const Operations = enhaceOperations(ProductOperations)
 const TransactionsEnhace = enhaceTransactions(Transactions);
 
-const App = props => {
-  return (
-    <div className="App">
-      <Navigation />
-      <main>
-        <Accounts />
-        <Operations />
-        <div className="container">
-          <TransactionsEnhace />
-        </div>
-      </main>
-    </div>
-  );
-}
+const App = props => (
+  <div className="App">
+    <main>
+      <Accounts />
+      <Operations />
+      <div className="container">
+        <TransactionsEnhace />
+      </div>
+    </main>
+  </div>
+);
 
 export default App;
