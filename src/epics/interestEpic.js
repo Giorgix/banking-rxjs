@@ -7,6 +7,6 @@ export default (action$, state$) => interval(15 * 1000).pipe(
         map(() => ({
             type: 'DEPOSIT',
             accountId: state$.value.accounts[0].id,
-            amount: computeInterest(state$.value.accounts[1].balance)
+            amount: computeInterest(state$.value.accounts[0].balance)
         }))
 );
