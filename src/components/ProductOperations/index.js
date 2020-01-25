@@ -62,7 +62,7 @@ export default function ProductOperations (props) {
             <input placeholder="25" id="transfer_amount" value={transferAmount} type="number" className="validate" onChange={(e) => setTransferAmount(e.target.value)} />
             <label htmlFor="transfer_amount">Amount</label>
           </div>
-          <div className="col s12">
+          <div className="col s12 center-align">
             <button className="waves-effect waves-light btn" onClick={transfer}>
               <i className="material-icons right">add</i>Transfer ${transferAmount} from {fromSelected} to {toSelected}
             </button>

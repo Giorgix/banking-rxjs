@@ -6,7 +6,7 @@ import { withdraw, deposit } from '../../actions';
  */
 export default function AccountBalance ({alias, balance, id, dispatch, onChange}) {
   return(
-    <div className="col s12 m6">
+    <div className="col s12 m6 center-align">
       <div className="card horizontal">
         <div className="card-stacked">
           <div className="card-content">
