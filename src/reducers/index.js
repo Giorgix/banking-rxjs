@@ -1,5 +1,11 @@
 import * as R from 'ramda';
-import {RECEIVE_ACCOUNTS_FULLFILLED, REQUEST_ACCOUNTS, REQUEST_ACCOUNT, RECEIVE_ACCOUNT_FULLFILLED} from '../actions';
+import {
+    RECEIVE_ACCOUNTS_FULLFILLED,
+    REQUEST_ACCOUNTS,
+    REQUEST_ACCOUNT,
+    RECEIVE_ACCOUNT_FULLFILLED,
+    RECEIVE_ACCOUNTS_REJECTED
+} from '../actions';
 
 // Utilities to make it easier to access certain values
 const checkingLens = R.lensProp('accounts.checking');
@@ -59,6 +65,14 @@ export default function reducer (state = {
                 didInvalidate: false,
                 accounts: action.accounts,
                 lastUpdated: action.receivedAt
+            }
+        case RECEIVE_ACCOUNTS_REJECTED:
+            return {
+                ...state,
+                isFetching: false,
+                didInvalidate: false,
+                error: action.payload,
+                hasError: action.error
             }
         case RECEIVE_ACCOUNT_FULLFILLED:
 
