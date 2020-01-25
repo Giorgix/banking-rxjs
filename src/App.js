@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Ramda
-import { compose, prop, curry, pick } from 'ramda';
+import { compose, prop } from 'ramda';
 
 // RxJS
 import { distinctUntilChanged, filter } from 'rxjs/operators';
@@ -24,7 +24,14 @@ import {firebaseApp} from './firebase';
 import createStreamFromStore from './utils/createStreamFromStore';
 
 // HOC
-import {branch, withStoreState, toList, withDispatcher, withUserState} from './hoc';
+import {
+  branch,
+  withStoreState,
+  toList,
+  withDispatcher,
+  withPickedProps,
+  withUserState
+} from './hoc';
 
 // Assets
 import logo from './logo.svg';
@@ -47,11 +54,6 @@ store.dispatch({type: 'REQUEST_ACCOUNTS'});
 
 // AUTH
 const authObservable$ = authState(firebaseApp.auth())
-
-const withPickedProps = curry((propsToPick, BaseComponent) => props => {
-  const newProps = pick(propsToPick, props);
-  return <BaseComponent {...newProps} />;
-})
 
 const enhaceAccount = compose(
   withStoreState(store$, [distinctUntilChanged('accounts')]),
