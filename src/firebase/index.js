@@ -24,7 +24,7 @@ firebaseApp.analytics();
 
 // DATABASE
 export const db = firebaseApp.firestore();
-//export const firebaseAuth = firebaseApp.auth();
+export const firebaseAuth = firebaseApp.auth();
 // AUTH
 
 
