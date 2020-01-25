@@ -15,10 +15,10 @@ export default function AccountBalance ({alias, balance, id, dispatch, onChange}
           </div>
           <div className="card-action">
           <a
-            class="waves-effect waves-light btn-small"
+            className="waves-effect waves-light btn-small"
             onClick={() => dispatch({type: 'REQUEST_ACCOUNT', accountId: id})}
           >
-            <i class="material-icons left">autorenew</i>Update
+            <i className="material-icons left">autorenew</i>Update
           </a>
           </div>
         </div>
