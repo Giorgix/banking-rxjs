@@ -12,6 +12,7 @@ import Transactions from './components/Transactions';
 import Spinner from './components/Spinner';
 import AccountBalance from './components/AccountBalance';
 import ProductOperations from './components/ProductOperations';
+import NavBar from './components/NavBar';
 
 // Redux
 import configureStore from './redux-store/store.js';
@@ -88,14 +89,13 @@ const App = props => {
   // as props to populate the UI with the illusion of constant cash flow into both accounts
   return (
     <div className="App">
+      <NavBar />
       <header className="App-header">
       <img src={logo} className="App-logo" alt="logo" />
       </header>
       <main>
         <Accounts />
-        <div className="row">
-          <Operations />
-        </div>
+        <Operations />
         <div className="container">
           <TransactionsEnhace />
         </div>
