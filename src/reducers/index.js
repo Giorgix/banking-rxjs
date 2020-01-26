@@ -33,6 +33,7 @@ export default function reducer (state = {
             console.log('Withdrawing...');
             newState = {
                 ...state,
+                accounts: [...state.accounts]
             };
             newState.accounts[chosenAccountIndex].balance -= parseFloat(action.amount);
             return newState;
@@ -40,6 +41,7 @@ export default function reducer (state = {
             console.log('Depositing...');
             newState = {
                 ...state,
+                accounts: [...state.accounts]
             };
             newState.accounts[chosenAccountIndex].balance += parseFloat(action.amount);
             return newState;
