@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-//import './style.css';
+import './NavBar.module.css';
 //import logo from '../../logo.svg';
 import {branch} from '../../hoc';
 import {firebaseAuth} from '../../firebase';
@@ -50,6 +50,7 @@ export default function NavBar ({user, authObject}) {
       <nav>
         <div className="nav-wrapper">
           <a href="#" className="brand-logo">
+            <img src="/logo.svg" className="navbar-logo" alt="logo" />
             <span>Banking RxJS</span>
           </a>
           <a href="#" data-target="mobile-demo" className="sidenav-trigger">
