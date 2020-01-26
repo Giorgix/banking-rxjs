@@ -22,7 +22,7 @@ var firebaseConfig = {
 
 try {
     firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
+    //firebase.analytics();
 } catch (err) {
     // we skip the "already exists" message which is
     // not an actual error when we're hot-reloading
