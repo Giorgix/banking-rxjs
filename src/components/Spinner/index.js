@@ -1,5 +1,5 @@
 import React from 'react';
-//import './style.css';
+import './Spinner.module.css';
 
 export default () =>
 <div className="spinner">
