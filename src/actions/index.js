@@ -5,12 +5,26 @@ export const RECEIVE_ACCOUNTS_REJECTED = 'RECEIVE_ACCOUNTS_REJECTED';
 export const REQUEST_ACCOUNT = 'REQUEST_ACCOUNT';
 export const RECEIVE_ACCOUNT_FULLFILLED = 'RECEIVE_ACCOUNT_FULLFILLED';
 export const RECEIVE_ACCOUNT_REJECTED = 'RECEIVE_ACCOUNT_REJECTED';
+export const START_INTEREST = 'START_INTEREST';
+export const STOP_INTEREST = 'STOP_INTEREST';
 export const DEPOSIT = 'DEPOSIT';
 export const WITHDRAW = 'WITHDRAW';
 
 export function requestAccounts (payload) {
     return {
         type: REQUEST_ACCOUNTS
+    }
+}
+
+export function startInterest (payload) {
+    return {
+        type: START_INTEREST
+    }
+}
+
+export function stopInterest (payload) {
+    return {
+        type: STOP_INTEREST
     }
 }
 
