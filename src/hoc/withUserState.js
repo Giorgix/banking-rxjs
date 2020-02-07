@@ -5,6 +5,12 @@ import { doc } from 'rxfire/firestore';
 import { db } from '../firebase';
 import {filter, switchMap, map, switchAll} from 'rxjs/operators';
 
+// Firebase
+import { authState } from 'rxfire/auth';
+import {firebaseAuth} from '../firebase';
+
+const authObservable$ = authState(firebaseAuth);
+
 export default curry((observable$, BaseComponent) => props => {
 
     const [user, setUser] = useState({
@@ -34,4 +40,4 @@ export default curry((observable$, BaseComponent) => props => {
     },[setUser]);
 
     return <BaseComponent {...merge(props, {user})} />;
-});
+})(authObservable$);
