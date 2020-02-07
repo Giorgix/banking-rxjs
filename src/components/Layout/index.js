@@ -6,11 +6,8 @@ import Head from 'next/head';
 import { authState } from 'rxfire/auth';
 import {firebaseAuth} from '../../firebase';
 
-// Redux
-import { connect } from 'react-redux';
-import {requestAccounts, startInterest, stopInterest} from '../../actions';
-
-import { compose, prop, curry } from 'ramda';
+// Utils
+import { compose } from 'ramda';
 
 // HOC
 import {withUserState} from '../../hoc';
@@ -22,7 +19,7 @@ const layoutStyle = {
 };
 
 const enhace = compose(
-  withUserState(authState(firebaseAuth)),
+  withUserState(authState(firebaseAuth))
 );
 
 const Navigation = enhace(NavBar);
