@@ -5,11 +5,10 @@ import {
     REQUEST_ACCOUNT,
     RECEIVE_ACCOUNT_FULLFILLED,
     RECEIVE_ACCOUNTS_REJECTED,
+    RECEIVE_ACCOUNT_REJECTED,
     LOGGED_OUT,
     LOGGED_IN
 } from '../actions';
-
-import Router from 'next/router';
 
 // Utilities to make it easier to access certain values
 const checkingLens = R.lensProp('accounts.checking');
@@ -96,11 +95,25 @@ export default function reducer (state = {
                 didInvalidate: false,
                 lastUpdated: action.receivedAt
             }
+        case RECEIVE_ACCOUNT_REJECTED:
+            return {
+                ...state,
+                isFetching: false,
+                didInvalidate: false,
+                error: action.payload,
+                hasError: action.error
+        }
         case LOGGED_OUT:
-            Router.push('/login');
-            return {...state}
+            newState = {
+                ...state,
+            };
+            newState.accounts = [];
+            newState.transactions = [];
+            return {
+                ...newState,
+                isFetching: false,
+            }
         case LOGGED_IN:
-            Router.push('/');
             return {...state}
         default:
             return state;
