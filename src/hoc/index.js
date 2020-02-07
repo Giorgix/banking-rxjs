@@ -7,4 +7,6 @@ export {default as withStoreState} from './withStoreState';
 export {default as withDispatcher} from './withDispatcher';
 export {default as withUserState} from './withUserState';
 export {default as withPickedProps} from './withPickedProps';
+export {default as withConnectedProps} from './withConnectedProps';
+export {default as withConnectedActions} from './withConnectedActions';
 export {default as toList} from './toList';

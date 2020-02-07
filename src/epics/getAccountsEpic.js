@@ -1,12 +1,13 @@
-import { map, switchMap, catchError, timestamp, delay, tap } from 'rxjs/operators';
+import { map, switchMap, catchError, timestamp, delay, tap, takeUntil } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { collectionData } from 'rxfire/firestore';
 import { db } from '../firebase';
+import {LOGGED_OUT, REQUEST_ACCOUNTS} from '../actions';
 
 const accountsRef = db.collection('accounts');
 
 export default (action$, state$) => action$.pipe(
-        ofType('REQUEST_ACCOUNTS'),
+        ofType(REQUEST_ACCOUNTS),
         delay(Math.trunc(Math.random() * (3000 - 500) + 500)),
         switchMap(action =>
             collectionData(accountsRef, 'id').pipe(
@@ -23,7 +24,12 @@ export default (action$, state$) => action$.pipe(
                     type: 'RECEIVE_ACCOUNTS_REJECTED',
                     error: true,
                     payload
-                }])
+                }]),
+                takeUntil(
+                    action$.ofType(
+                      LOGGED_OUT
+                    )
+                  )
             )
         )
 );

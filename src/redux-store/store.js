@@ -1,28 +1,23 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension'
 import { createEpicMiddleware } from 'redux-observable';
 import { rootEpic, rootReducer } from '../modules/root';
 
-const epicMiddleware = createEpicMiddleware();
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const initialState = {
-    accounts: {
-        checking: 100,
-        savings: 100
-    },
-    transactions: [],
-    isFetching: true,
-    didInvalidate: false,
-    lastUpdated: Date.now()
+  accounts: [],
+  transactions: [],
+  isFetching: true,
+  didInvalidate: false,
+  lastUpdated: Date.now()
 }
 
 export default function configureStore() {
+  const epicMiddleware = createEpicMiddleware();
   const store = createStore(
     rootReducer,
     initialState,
-    composeEnhancers(
-        applyMiddleware(epicMiddleware)
-    ),
+    composeWithDevTools(applyMiddleware(epicMiddleware)),
   );
 
   epicMiddleware.run(rootEpic);

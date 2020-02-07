@@ -1,0 +1,35 @@
+.navbar-logo {
+    height: 6vmin;
+    pointer-events: none;
+    vertical-align: middle;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .navbar-logo {
+      animation: navbar-logo-spin infinite 20s linear;
+    }
+}
+
+.nav-wrapper {
+    background-color: #282c34;
+    color: white;
+}
+
+.user-avatar {
+    max-width: 3rem;
+    margin-left: 1rem;
+    vertical-align: middle;
+}
+.username {
+    color: #61DAFB;
+    font-weight: 500;
+}
+
+@keyframes navbar-logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+}

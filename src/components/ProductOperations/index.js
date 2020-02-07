@@ -8,7 +8,7 @@ export default function ProductOperations (props) {
 
   const [fromSelected, setFromselected] = useState('');
   const [toSelected, setToselected] = useState('');
-  const [transferAmount, setTransferAmount] = useState(0);
+  const [transferAmount, setTransferAmount] = useState('');
 
   const accountOptionsFiltered = (selected = fromSelected) =>
     props.accounts.filter(account => parseInt(account.id) !== parseInt(selected)).map(account => {
@@ -34,32 +34,41 @@ export default function ProductOperations (props) {
 
   return(
     <div className="row">
-      <div className="col s12 m6 input-field">
-        <select className="browser-default" value={fromSelected}
-          onChange={(e) => {
-            setFromselected(e.target.value);
-          }}
-        >
-          <option value="" disabled>Choose origin</option>
-          {accountOptionsFiltered(toSelected)}
-        </select>
+      <div className="col s12">
+        <div className="row">
+          <div className="col s12 m6 input-field">
+            <select className="browser-default" value={fromSelected}
+              onChange={(e) => {
+                setFromselected(e.target.value);
+              }}
+            >
+              <option value="" disabled>Choose origin</option>
+              {accountOptionsFiltered(toSelected)}
+            </select>
+          </div>
+          <div className="col s12 m6 input-field">
+            <select className="browser-default" value={toSelected}
+              onChange={(e) => {
+                setToselected(e.target.value);
+              }}
+            >
+              <option value="" disabled>Choose destination</option>
+              {accountOptionsFiltered(fromSelected)}
+            </select>
+          </div>
+        </div>
+        <div className="row">
+          <div className="input-field col s8 offset-s2">
+            <input placeholder="25" id="transfer_amount" value={transferAmount} type="number" className="validate" onChange={(e) => setTransferAmount(e.target.value)} />
+            <label htmlFor="transfer_amount">Amount</label>
+          </div>
+          <div className="col s12 center-align">
+            <button className="waves-effect waves-light btn" onClick={transfer}>
+              <i className="material-icons right">add</i>Transfer ${transferAmount} from {fromSelected} to {toSelected}
+            </button>
+          </div>
+        </div>
       </div>
-      <div className="col s12 m6 input-field">
-        <select className="browser-default" value={toSelected}
-          onChange={(e) => {
-            setToselected(e.target.value);
-          }}
-        >
-          <option value="" disabled>Choose destination</option>
-          {accountOptionsFiltered(fromSelected)}
-        </select>
-      </div>
-      <div className="input-field col s12">
-        <input placeholder="25" value={transferAmount} name="amount" type="number" className="validate" onChange={(e) => setTransferAmount(e.target.value)} />
-        <label for="amount">Amount</label>
-      </div>
-      <button className="waves-effect waves-light btn" onClick={transfer}
-      ><i className="material-icons right">add</i>Transfer ${transferAmount} from {fromSelected} to {toSelected}</button>
     </div>
   );
 }

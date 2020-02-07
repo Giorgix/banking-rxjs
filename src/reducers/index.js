@@ -1,5 +1,14 @@
 import * as R from 'ramda';
-import {RECEIVE_ACCOUNTS_FULLFILLED, REQUEST_ACCOUNTS, REQUEST_ACCOUNT, RECEIVE_ACCOUNT_FULLFILLED} from '../actions';
+import {
+    RECEIVE_ACCOUNTS_FULLFILLED,
+    REQUEST_ACCOUNTS,
+    REQUEST_ACCOUNT,
+    RECEIVE_ACCOUNT_FULLFILLED,
+    RECEIVE_ACCOUNTS_REJECTED,
+    RECEIVE_ACCOUNT_REJECTED,
+    LOGGED_OUT,
+    LOGGED_IN
+} from '../actions';
 
 // Utilities to make it easier to access certain values
 const checkingLens = R.lensProp('accounts.checking');
@@ -27,6 +36,7 @@ export default function reducer (state = {
             console.log('Withdrawing...');
             newState = {
                 ...state,
+                accounts: [...state.accounts]
             };
             newState.accounts[chosenAccountIndex].balance -= parseFloat(action.amount);
             return newState;
@@ -34,6 +44,7 @@ export default function reducer (state = {
             console.log('Depositing...');
             newState = {
                 ...state,
+                accounts: [...state.accounts]
             };
             newState.accounts[chosenAccountIndex].balance += parseFloat(action.amount);
             return newState;
@@ -60,6 +71,14 @@ export default function reducer (state = {
                 accounts: action.accounts,
                 lastUpdated: action.receivedAt
             }
+        case RECEIVE_ACCOUNTS_REJECTED:
+            return {
+                ...state,
+                isFetching: false,
+                didInvalidate: false,
+                error: action.payload,
+                hasError: action.error
+            }
         case RECEIVE_ACCOUNT_FULLFILLED:
 
             const accountIndex = R.findIndex(
@@ -76,6 +95,26 @@ export default function reducer (state = {
                 didInvalidate: false,
                 lastUpdated: action.receivedAt
             }
+        case RECEIVE_ACCOUNT_REJECTED:
+            return {
+                ...state,
+                isFetching: false,
+                didInvalidate: false,
+                error: action.payload,
+                hasError: action.error
+        }
+        case LOGGED_OUT:
+            newState = {
+                ...state,
+            };
+            newState.accounts = [];
+            newState.transactions = [];
+            return {
+                ...newState,
+                isFetching: false,
+            }
+        case LOGGED_IN:
+            return {...state}
         default:
             return state;
     }

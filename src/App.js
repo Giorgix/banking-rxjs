@@ -1,5 +1,4 @@
 import React from 'react';
-
 // Ramda
 import { compose, prop } from 'ramda';
 
@@ -18,7 +17,7 @@ import configureStore from './redux-store/store.js';
 
 // Firebase
 import { authState } from 'rxfire/auth';
-import {firebaseApp} from './firebase';
+import {firebaseAuth} from './firebase';
 
 // Utils
 import createStreamFromStore from './utils/createStreamFromStore';
@@ -34,32 +33,31 @@ import {
 } from './hoc';
 
 // Assets
-import logo from './logo.svg';
-import './App.css';
+//import './App.css';
 
 //initFirebase();
-firebaseApp.auth().signInWithEmailAndPassword('jorgemdramos@gmail.com', '11223344').catch(function(error) {
+
+//writeUserData('eop5emva3sfKnewQdYuIXvZ99G13', 'Paco', 'email@email.com', 'img.jpg');
+
+firebaseAuth.signInWithEmailAndPassword('jorgemdramos@gmail.com', '11223344').catch(function(error) {
   // Handle Errors here.
   var errorCode = error.code;
   var errorMessage = error.message;
   console.log('AUTH ERROR! ', errorCode, errorMessage)
   // ...
 });
-
-//writeUserData('eop5emva3sfKnewQdYuIXvZ99G13', 'Paco', 'email@email.com', 'img.jpg');
-
 const store = configureStore();
+console.log('store: ', store)
 const store$ = createStreamFromStore(store);
 store.dispatch({type: 'REQUEST_ACCOUNTS'});
 
 // AUTH
-const authObservable$ = authState(firebaseApp.auth())
+const authObservable$ = authState(firebaseAuth)
 
 const enhaceAccount = compose(
   withStoreState(store$, [distinctUntilChanged('accounts')]),
   withDispatcher(store.dispatch),
-  withUserState(authObservable$),
-  withPickedProps(['accounts', 'isFetching', 'dispatch', 'lastUpdated', 'user']),
+  withPickedProps(['accounts', 'isFetching', 'dispatch', 'lastUpdated']),
   branch(prop('isFetching'), Spinner),
   toList({className: 'accounts-list row'}),
 );
@@ -78,30 +76,27 @@ const enhaceTransactions = compose(
   branch(prop('isFetching'), Spinner),
 );
 
-//const BalancesOrSpinner = branch(prop('isFetching'), Spinner, Balances);
-//const WithStoreState = withStoreState(store$, BalancesOrSpinner);
+const enchaceNavBar = compose(
+  withUserState(authObservable$),
+  withDispatcher(store.dispatch),
+  withPickedProps(['dispatch', 'user']),
+);
+
+const Navigation = enchaceNavBar(NavBar);
 const Accounts = enhaceAccount(AccountBalance);
 const Operations = enhaceOperations(ProductOperations)
 const TransactionsEnhace = enhaceTransactions(Transactions);
-const App = props => {
-  // Renders the balances component to the DOM and passes the balance$ stream
-  // as props to populate the UI with the illusion of constant cash flow into both accounts
-  return (
-    <div className="App">
-      <header className="App-header">
-      <img src={logo} className="App-logo" alt="logo" />
-      </header>
-      <main>
-        <Accounts />
-        <div className="row">
-          <Operations />
-        </div>
-        <div className="container">
-          <TransactionsEnhace />
-        </div>
-      </main>
-    </div>
-  );
-}
+
+const App = props => (
+  <div className="App">
+    <main>
+      <Accounts />
+      <Operations />
+      <div className="container">
+        <TransactionsEnhace />
+      </div>
+    </main>
+  </div>
+);
 
 export default App;
