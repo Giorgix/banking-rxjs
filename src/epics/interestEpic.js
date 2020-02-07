@@ -1,7 +1,7 @@
 import { interval } from 'rxjs';
 import { map, mergeMap, takeUntil } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import {START_INTEREST, STOP_INTEREST} from '../actions';
+import {START_INTEREST, STOP_INTEREST, LOGGED_OUT} from '../actions';
 
 const computeInterest = p => 1 / 10 / 365 * p;
 
@@ -17,6 +17,7 @@ export default (action$, state$) => action$.pipe(
             takeUntil(
             action$.ofType(
               STOP_INTEREST,
+              LOGGED_OUT
             )
           )
         )
