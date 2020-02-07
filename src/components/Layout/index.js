@@ -2,10 +2,6 @@ import React from 'react';
 import NavBar from '../NavBar';
 import Head from 'next/head';
 
-// Firebase
-import { authState } from 'rxfire/auth';
-import {firebaseAuth} from '../../firebase';
-
 // Utils
 import { compose } from 'ramda';
 
@@ -19,7 +15,7 @@ const layoutStyle = {
 };
 
 const enhace = compose(
-  withUserState(authState(firebaseAuth))
+  withUserState
 );
 
 const Navigation = enhace(NavBar);
