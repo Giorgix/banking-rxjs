@@ -9,6 +9,12 @@ export const START_INTEREST = 'START_INTEREST';
 export const STOP_INTEREST = 'STOP_INTEREST';
 export const DEPOSIT = 'DEPOSIT';
 export const WITHDRAW = 'WITHDRAW';
+export const ERROR = 'ERROR';
+export const LOG_OUT = 'LOG_OUT';
+export const LOGGED_OUT = 'LOGGED_OUT';
+export const LOGGED_IN = 'LOGGED_IN';
+export const LOG_IN = 'LOG_IN';
+export const SIGN_UP = 'SIGN_UP';
 
 export function requestAccounts (payload) {
     return {
@@ -42,5 +48,20 @@ export function withdraw(payload){
     return {
         type: WITHDRAW,
         ...payload
+    }
+}
+
+// LOG IN
+export function logIn(payload){
+    return {
+        type: LOG_IN,
+        ...payload
+    }
+}
+
+// LOG OUT
+export function logOut(payload){
+    return {
+        type: LOG_OUT
     }
 }
