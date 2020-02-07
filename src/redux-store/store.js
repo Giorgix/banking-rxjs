@@ -5,10 +5,7 @@ import { rootEpic, rootReducer } from '../modules/root';
 
 
 const initialState = {
-  accounts: {
-    checking: 100,
-    savings: 100
-  },
+  accounts: [],
   transactions: [],
   isFetching: true,
   didInvalidate: false,
