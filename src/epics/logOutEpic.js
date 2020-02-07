@@ -3,12 +3,13 @@ import { switchMap, catchError, map, tap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 import { LOG_OUT, LOGGED_OUT, ERROR } from '../actions';
 import {firebaseAuth} from '../firebase';
+import Router from 'next/router';
 
 export default (action$, state$) => action$.pipe(
         ofType(LOG_OUT),
         switchMap(action =>
             from(firebaseAuth.signOut()).pipe(
-                tap(console.log),
+                map(() => Router.push('/login')),
                 map(() => ({
                     type: LOGGED_OUT
 
