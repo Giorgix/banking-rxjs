@@ -9,4 +9,5 @@ export {default as withUserState} from './withUserState';
 export {default as withPickedProps} from './withPickedProps';
 export {default as withConnectedProps} from './withConnectedProps';
 export {default as withConnectedActions} from './withConnectedActions';
+export {default as withAuthentication} from './withAuthentication';
 export {default as toList} from './toList';

@@ -3,15 +3,12 @@ import {curry, merge} from 'ramda';
 import {merge as mergeAll} from 'rxjs';
 import { doc } from 'rxfire/firestore';
 import { db, authObservable$ } from '../firebase';
+import { AuthUserContext } from '../components/Session';
 import {filter, switchMap, map, distinct, tap} from 'rxjs/operators';
-
 
 export default curry((observable$, BaseComponent) => props => {
 
-    const [user, setUser] = useState({
-        username: '',
-        profile_picture: ''
-    });
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
       const loggedIn$ = observable$.pipe(
@@ -26,7 +23,8 @@ export default curry((observable$, BaseComponent) => props => {
         filter(u => u === null),
       );
       const auth$ = mergeAll(loggedIn$, loggedOut$).pipe(
-        distinct()
+        distinct(),
+        tap(user => console.log('withAuth: ', user))
       ).subscribe(setUser);
 
       return function cleanup() {
@@ -34,5 +32,9 @@ export default curry((observable$, BaseComponent) => props => {
       };
     },[setUser]);
 
-    return <BaseComponent {...merge(props, {user})} />;
+    return (
+      <AuthUserContext.Provider value={user}>
+        <BaseComponent {...props} />
+      </AuthUserContext.Provider>
+    )
 })(authObservable$);
