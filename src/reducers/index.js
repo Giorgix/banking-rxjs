@@ -7,7 +7,8 @@ import {
     RECEIVE_ACCOUNTS_REJECTED,
     RECEIVE_ACCOUNT_REJECTED,
     LOGGED_OUT,
-    LOGGED_IN
+    LOGGED_IN,
+    SET_USER
 } from '../actions';
 
 // Utilities to make it easier to access certain values
@@ -115,6 +116,8 @@ export default function reducer (state = {
             }
         case LOGGED_IN:
             return {...state}
+        case SET_USER:
+            return {...state, user: action.user}
         default:
             return state;
     }

@@ -8,8 +8,8 @@ const initialState = {
   accounts: [],
   transactions: [],
   isFetching: true,
-  didInvalidate: false,
-  lastUpdated: Date.now()
+  lastUpdated: Date.now(),
+  user: null
 }
 
 export default function configureStore() {

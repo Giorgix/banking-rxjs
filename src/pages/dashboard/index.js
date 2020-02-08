@@ -15,34 +15,28 @@ import {requestAccounts, startInterest, stopInterest} from '../../actions'
 
 // HOC
 import {
-    branch,
-    toList,
-    withConnectedProps
+    withAuthentication
 } from '../../hoc';
 
 const Dashboard = ({requestAccounts, startInterest, stopInterest}) => {
 
-  useEffect(() => {
 
-  }, []);
-
-  /*useEffect(() => {
-      setTimeout(() => {
-          stopInterest();
-      }, 8000);
-  }, [stopInterest]);*/
   return (
-      <Layout>
+    <Layout>
       <div className="login">
-      <main>
-        <p>Dashboard page</p>
-      </main>
-    </div>
-  </Layout>
+        <main>
+          <p>Dashboard page</p>
+        </main>
+      </div>
+    </Layout>
   )
 };
 
-Dashboard.getInitialProps = async ({ store, isServer }) => {
+const enhaceDashboard = compose(
+  withAuthentication
+)(Dashboard)
+
+enhaceDashboard.getInitialProps = async ({ store, isServer }) => {
 
     /*const state$ = new StateObservable(new Subject(), store.getState())
     const resultAction = await rootEpic(
@@ -52,10 +46,6 @@ Dashboard.getInitialProps = async ({ store, isServer }) => {
     console.log('result action: ', resultAction);*/
 
     return { isServer }
-  }
+}
 
-  export default connect(null, {
-    requestAccounts: requestAccounts,
-    startInterest: startInterest,
-    stopInterest: stopInterest,
-  })(Dashboard)
+export default enhaceDashboard;

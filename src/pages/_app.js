@@ -3,6 +3,8 @@ import { Provider } from 'react-redux';
 import App from 'next/app';
 import withRedux from 'next-redux-wrapper';
 import configureStore from '../redux-store/store.js';
+import Layout from '../components/Layout';
+import { withAuthentication } from '../hoc';
 import 'materialize-css/dist/css/materialize.css';
 
 class MyApp extends App {
@@ -23,5 +25,7 @@ class MyApp extends App {
     )
   }
 }
+
+const withAuthApp = withAuthentication(MyApp)
 
 export default withRedux(configureStore)(MyApp)
