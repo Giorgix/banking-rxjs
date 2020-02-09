@@ -1,9 +1,7 @@
 import React, {useEffect} from 'react';
 import Link from 'next/link';
 import './NavBar.module.css';
-//import logo from '../../logo.svg';
 import {branch, withConnectedActions} from '../../hoc';
-import {firebaseAuth} from '../../firebase';
 
 const Auth = branch(
   ({user}) => user && user.username,
