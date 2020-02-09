@@ -12,7 +12,6 @@ export default (action$, state$) => action$.pipe(
         ofType(LOGGED_IN),
         switchMap(action =>
             doc(db.doc(`users/${action.user.uid}`)).pipe(
-                map((user) => { Router.push('/'); return user }),
                 map(snapshot => ({id: snapshot.id, ...snapshot.data()})),
                 map((user) => ({
                     type: SET_USER,
