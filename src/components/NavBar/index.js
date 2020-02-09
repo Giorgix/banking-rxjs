@@ -21,7 +21,7 @@ const Auth = branch(
     return (
       <React.Fragment>
         <ul id="dropdown1" className="dropdown-content">
-          <li><a href="#!">settings</a></li>
+          <li><Link href="/account"><a>account</a></Link></li>
           <li><a href="#!">notifications</a></li>
           <li className="divider"></li>
           <li><a href="#!" onClick={() => logOut()}>logout</a></li>
@@ -52,7 +52,7 @@ function NavBar ({user, authObject, logOut}) {
   const loggedNav = () => {
     return(
       <React.Fragment>
-        <li><Link href="/dashboard"><a>Dashboard</a></Link></li>
+        <li><Link href="/account"><a>Account</a></Link></li>
         <li><a href="badges.html">My Products</a></li>
         <li><a href="collapsible.html">Add product</a></li>
       </React.Fragment>
@@ -106,7 +106,7 @@ function NavBar ({user, authObject, logOut}) {
     </nav>
     <ul className="sidenav" id="mobile-demo">
       <Menu user={user}/>
-      <li><a href="#!">settings</a></li>
+      <li><Link href="/account"><a>account</a></Link></li>
       <li><a href="#!">notifications</a></li>
       <li className="divider"></li>
       <li><a href="#!" onClick={() => logOut()}>logout</a></li>

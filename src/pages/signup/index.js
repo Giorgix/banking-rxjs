@@ -1,8 +1,9 @@
 import React, {useEffect} from 'react';
 import Layout from '../../components/Layout';
-import SignInForm from '../../components/SignInForm';
+import SignUpForm from '../../components/SignUpForm';
 import Router from 'next/router';
 import Link from 'next/link';
+
 // Ramda
 import { compose } from 'ramda';
 
@@ -15,7 +16,7 @@ import {
   withConnectedProps
 } from '../../hoc';
 
-const Login = ({logIn, user}) => {
+const SignUp = ({signUp, user}) => {
 
   useEffect(() => {
     user && Router.push('/');
@@ -25,25 +26,25 @@ const Login = ({logIn, user}) => {
     <Layout>
       <div className="login">
         <main>
-          <h2>Log in</h2>
+          <h2>Create an account</h2>
           <div>
-            <SignInForm loginMethod={logIn} />
+            <SignUpForm signUpMethod={signUp} />
           </div>
-          <p>Don't have an account? <Link href="/signup"><a>Create one!</a></Link></p>
+          <p>Already have an account? <Link href="/login"><a>Log in</a></Link></p>
         </main>
       </div>
     </Layout>
   )
 };
 
-const enhanceLogin = compose(
-  withConnectedActions(['logIn']),
+const enhanceSignUp = compose(
+  withConnectedActions(['signUp']),
   withConnectedProps(['user']),
   withAuthentication
-)(Login);
+)(SignUp);
 
-enhanceLogin.getInitialProps = async ({ store, isServer }) => {
+enhanceSignUp.getInitialProps = async ({ store, isServer }) => {
   return { isServer }
 }
 
-export default enhanceLogin;
+export default enhanceSignUp;

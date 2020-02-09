@@ -1,0 +1,7 @@
+.general-error {
+    color: red;
+    display: none;
+}
+.has-error {
+    display: block;
+}

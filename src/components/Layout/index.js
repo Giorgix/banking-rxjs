@@ -1,6 +1,8 @@
 import React from 'react';
 import NavBar from '../NavBar';
+import ErrorMessage from '../Error';
 import Head from 'next/head';
+
 
 // Utils
 import { compose } from 'ramda';
@@ -15,11 +17,15 @@ const layoutStyle = {
   border: '1px solid #DDD'
 };
 
-const enhace = compose(
+const enhance = compose(
   withConnectedProps(['user'])
 );
 
-const Navigation = enhace(NavBar);
+const Navigation = enhance(NavBar);
+
+const EnhanceError = compose(
+  withConnectedProps(['error'])
+)(ErrorMessage);
 
 const Layout = props => {
   return (
@@ -31,6 +37,7 @@ const Layout = props => {
     </Head>
     <Navigation />
     <div style={layoutStyle}>
+      <EnhanceError />
       {props.children}
     </div>
     </>

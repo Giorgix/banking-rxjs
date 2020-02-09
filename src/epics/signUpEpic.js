@@ -1,20 +1,25 @@
 import { from } from 'rxjs';
 import { switchMap, catchError, map, tap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import { LOG_IN, LOGGED_IN, ERROR } from '../actions';
+import { SIGN_UP, SIGNED_UP, ERROR } from '../actions';
 // Firebase
 import {firebaseAuth} from '../firebase';
-import Router from 'next/router';
 
 
 export default (action$, state$) => action$.pipe(
-        ofType(LOG_IN),
+        ofType(SIGN_UP),
         switchMap(action =>
-            from(firebaseAuth.signInWithEmailAndPassword(action.user, action.password)).pipe(
-                tap(() => Router.push('/')),
+            from(firebaseAuth.createUserWithEmailAndPassword(action.email, action.password)).pipe(
                 map((data) => ({
-                    type: LOGGED_IN,
-                    user: data.user
+                    type: SIGNED_UP,
+                    userId: data.user.uid,
+                    userData: {
+                        first_name: action.firstName,
+                        last_name: action.lastName,
+                        username: action.username,
+                        profile_picture: 'https://picsum.photos/300/300',
+                        email: data.user.email
+                    }
 
                 })),
                 catchError(payload => [{

@@ -17,10 +17,12 @@ export const LOGGED_IN = 'LOGGED_IN';
 export const LOG_IN = 'LOG_IN';
 export const SET_USER = 'SET_USER';
 export const SIGN_UP = 'SIGN_UP';
+export const SIGNED_UP = 'SIGNED_UP';
 
 export function requestAccounts (payload) {
     return {
-        type: REQUEST_ACCOUNTS
+        type: REQUEST_ACCOUNTS,
+        payload
     }
 }
 
@@ -64,6 +66,14 @@ export function initApp(payload){
 export function logIn(payload){
     return {
         type: LOG_IN,
+        ...payload
+    }
+}
+
+// SIGN UP
+export function signUp(payload){
+    return {
+        type: SIGN_UP,
         ...payload
     }
 }
