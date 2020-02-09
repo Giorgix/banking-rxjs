@@ -11,7 +11,7 @@ export default (action$, state$) => action$.pipe(
         ofType(LOG_IN),
         switchMap(action =>
             from(firebaseAuth.signInWithEmailAndPassword(action.user, action.password)).pipe(
-                map(() => Router.push('/')),
+                tap(() => Router.push('/')),
                 map((data) => ({
                     type: LOGGED_IN,
                     user: data.user

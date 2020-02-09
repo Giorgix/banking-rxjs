@@ -1,7 +1,7 @@
 import { from } from 'rxjs';
 import { switchMap, catchError, map, tap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import { SIGNED_UP, LOGGED_IN, ERROR } from '../actions';
+import { SIGNED_UP, INIT, ERROR } from '../actions';
 // Firebase
 
 import {db} from '../firebase';
@@ -14,10 +14,10 @@ export default (action$, state$) => action$.pipe(
             from(db.collection('users').doc(action.userId).set({
                     ...action.userData
             })).pipe(
-                map(() => Router.push('/')),
+                tap((data) => Router.push('/')),
                 map((data) => ({
-                    type: LOGGED_IN,
-                    user: data.user
+                    type: INIT,
+                    user: data
 
                 })),
                 catchError(payload => [{

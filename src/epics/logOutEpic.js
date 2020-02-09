@@ -9,7 +9,7 @@ export default (action$, state$) => action$.pipe(
         ofType(LOG_OUT),
         switchMap(action =>
             from(firebaseAuth.signOut()).pipe(
-                map(() => Router.push('/login')),
+                tap(() => Router.push('/login')),
                 map(() => ({
                     type: LOGGED_OUT
 
