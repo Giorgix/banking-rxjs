@@ -1,9 +1,7 @@
 import React, {useEffect} from 'react';
 import {curry} from 'ramda';
-import {merge as mergeAll} from 'rxjs';
-import { doc } from 'rxfire/firestore';
-import { db, authObservable$ } from '../firebase';
-import {filter, switchMap, map, distinct, tap} from 'rxjs/operators';
+import { authObservable$ } from '../firebase';
+import {filter, map} from 'rxjs/operators';
 import Router from 'next/router';
 
 export default curry((observable$, needsAuth, BaseComponent) => props => {
@@ -18,7 +16,7 @@ export default curry((observable$, needsAuth, BaseComponent) => props => {
       return function cleanup() {
           auth$.unsubscribe();
       };
-    },[props.setUser]);
+    });
 
     return (
       <BaseComponent {...props} />
