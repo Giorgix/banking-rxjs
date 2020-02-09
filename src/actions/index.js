@@ -68,6 +68,14 @@ export function logIn(payload){
     }
 }
 
+// SET USER
+export function setUser(user){
+    return {
+        type: SET_USER,
+        user
+    }
+}
+
 // LOG OUT
 export function logOut(payload){
     return {
