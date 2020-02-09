@@ -23,12 +23,10 @@
     "rxjs": "^6.5.3"
   },
   "scripts": {
-    "next": "next",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "db": "json-server --watch ./DB/db.json",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "next",
+    "start": "next start",
+    "build": "next build",
+    "db": "json-server --watch ./DB/db.json"
   },
   "eslintConfig": {
     "extends": "react-app"

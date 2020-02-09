@@ -1,61 +1,37 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Layout from '../../components/Layout';
 
 // Ramda
-import { compose, prop, curry } from 'ramda';
+import { compose } from 'ramda';
 
-// Firebase
-
-// Components
-import Spinner from '../../components/Spinner';
-
-// Redux
-import { connect } from 'react-redux'
-import {requestAccounts, startInterest, stopInterest} from '../../actions'
 
 // HOC
 import {
-    branch,
-    toList,
-    withConnectedProps
+    withAuthentication,
+    withAuthorization
 } from '../../hoc';
 
 const Dashboard = ({requestAccounts, startInterest, stopInterest}) => {
 
-  useEffect(() => {
 
-  }, []);
-
-  /*useEffect(() => {
-      setTimeout(() => {
-          stopInterest();
-      }, 8000);
-  }, [stopInterest]);*/
   return (
-      <Layout>
-      <div className="login">
-      <main>
-        <p>Dashboard page</p>
-      </main>
-    </div>
-  </Layout>
+    <Layout>
+        <div className="login">
+          <main>
+            <p>Dashboard private page</p>
+          </main>
+        </div>
+    </Layout>
   )
 };
 
-Dashboard.getInitialProps = async ({ store, isServer }) => {
+const enhaceDashboard = compose(
+  withAuthentication,
+  withAuthorization(true)
+)(Dashboard)
 
-    /*const state$ = new StateObservable(new Subject(), store.getState())
-    const resultAction = await rootEpic(
-      of({type: 'REQUEST_ACCOUNTS'}),
-      state$
-    ).toPromise() // we need to convert Observable to Promise
-    console.log('result action: ', resultAction);*/
-
+enhaceDashboard.getInitialProps = async ({ store, isServer }) => {
     return { isServer }
-  }
+}
 
-  export default connect(null, {
-    requestAccounts: requestAccounts,
-    startInterest: startInterest,
-    stopInterest: stopInterest,
-  })(Dashboard)
+export default enhaceDashboard;

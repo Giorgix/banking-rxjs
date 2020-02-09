@@ -16,7 +16,8 @@ import {
     branch,
     toList,
     withConnectedProps,
-    withConnectedActions
+    withConnectedActions,
+    withAuthentication
 } from '../hoc';
 
 
@@ -43,45 +44,36 @@ const AccountsList = enhaceAccounts(AccountBalance);
 const Operations = enhaceOperations(ProductOperations)
 const TransactionsEnhace = enhaceTransactions(Transactions);
 
-const Index = ({isServer, requestAccounts, startInterest, stopInterest}) => {
+const Index = ({isServer, requestAccounts, startInterest, stopInterest, initApp}) => {
 
   useEffect(() => {
       stopInterest();
       requestAccounts();
       startInterest();
-  }, [requestAccounts, startInterest, stopInterest]);
+      initApp();
+  }, [requestAccounts, startInterest, stopInterest, initApp]);
 
-  /*useEffect(() => {
-      setTimeout(() => {
-          stopInterest();
-      }, 8000);
-  }, [stopInterest]);*/
   return (
-      <Layout>
-      <div className="App">
+    <Layout>
       <main>
-        <h4>Rendering in server? -> <strong>{isServer.toString()}</strong></h4>
         <AccountsList />
         <Operations />
         <div className="container">
           <TransactionsEnhace />
         </div>
       </main>
-    </div>
-  </Layout>
+    </Layout>
   )
 };
 
-Index.getInitialProps = async ({isServer, pathname, query}) => {
+const enhace = compose(
+  withConnectedActions(['requestAccounts', 'startInterest', 'stopInterest', 'initApp']),
+  withAuthentication
+)
+
+const enhaceIndex = enhace(Index);
+enhaceIndex.getInitialProps = async ({isServer, pathname, query}) => {
   return { isServer };
 }
 
-export default withConnectedActions(
-  ['requestAccounts', 'startInterest', 'stopInterest'],
-)(Index)
-
-/*export default connect(null, {
-  requestAccounts: requestAccounts,
-  startInterest: startInterest,
-  stopInterest: stopInterest,
-})(Index)*/
+export default enhaceIndex;

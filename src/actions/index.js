@@ -1,4 +1,5 @@
 // GET ACCOUNTS
+export const INIT = 'INIT';
 export const REQUEST_ACCOUNTS = 'REQUEST_ACCOUNTS';
 export const RECEIVE_ACCOUNTS_FULLFILLED = 'RECEIVE_ACCOUNTS_FULLFILLED';
 export const RECEIVE_ACCOUNTS_REJECTED = 'RECEIVE_ACCOUNTS_REJECTED';
@@ -14,6 +15,7 @@ export const LOG_OUT = 'LOG_OUT';
 export const LOGGED_OUT = 'LOGGED_OUT';
 export const LOGGED_IN = 'LOGGED_IN';
 export const LOG_IN = 'LOG_IN';
+export const SET_USER = 'SET_USER';
 export const SIGN_UP = 'SIGN_UP';
 
 export function requestAccounts (payload) {
@@ -51,11 +53,26 @@ export function withdraw(payload){
     }
 }
 
+// INIT
+export function initApp(payload){
+    return {
+        type: INIT
+    }
+}
+
 // LOG IN
 export function logIn(payload){
     return {
         type: LOG_IN,
         ...payload
+    }
+}
+
+// SET USER
+export function setUser(user){
+    return {
+        type: SET_USER,
+        user
     }
 }
 

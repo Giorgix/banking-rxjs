@@ -1,17 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {curry, merge} from 'ramda';
+import {curry, merge ,compose} from 'ramda';
 import {merge as mergeAll} from 'rxjs';
 import { doc } from 'rxfire/firestore';
 import { db, authObservable$ } from '../firebase';
 import {filter, switchMap, map, distinct, tap} from 'rxjs/operators';
+import withConnectedActions from './withConnectedActions';
 
-
-export default curry((observable$, BaseComponent) => props => {
-
-    const [user, setUser] = useState({
-        username: '',
-        profile_picture: ''
-    });
+const withAuthentication = curry((observable$, BaseComponent) => props => {
 
     useEffect(() => {
       const loggedIn$ = observable$.pipe(
@@ -26,13 +21,21 @@ export default curry((observable$, BaseComponent) => props => {
         filter(u => u === null),
       );
       const auth$ = mergeAll(loggedIn$, loggedOut$).pipe(
-        distinct()
-      ).subscribe(setUser);
+        distinct(),
+        tap(user => console.log('withAuth: ', user))
+      ).subscribe(props.setUser);
 
       return function cleanup() {
           auth$.unsubscribe();
       };
-    },[setUser]);
+    },[props.setUser]);
 
-    return <BaseComponent {...merge(props, {user})} />;
+    return (
+      <BaseComponent {...props} />
+    )
 })(authObservable$);
+
+export default compose(
+  withConnectedActions(['setUser']),
+  withAuthentication
+)

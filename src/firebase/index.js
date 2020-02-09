@@ -7,6 +7,8 @@ import "firebase/auth";
 import "firebase/firestore";
 import "firebase/analytics";
 
+import { authState } from 'rxfire/auth';
+
 // Your web app's Firebase configuration
 var firebaseConfig = {
     apiKey: "AIzaSyAxWW2y0XLnQ44RVpuFf9UsyjDsnvTuyCI",
@@ -36,36 +38,5 @@ export const db = firebase.firestore();
 export const firebaseAuth = firebase.auth();
 
 
-// AUTH
-
-
-/*firebaseAuth.onAuthStateChanged(function(user) {
-    if (user) {
-        // User is signed in.
-        var displayName = user.displayName;
-        var email = user.email;
-        var emailVerified = user.emailVerified;
-        var photoURL = user.photoURL;
-        var isAnonymous = user.isAnonymous;
-        var uid = user.uid;
-        var providerData = user.providerData;
-        console.log('user signed in : ', user);
-        var docRef = db.collection("users").doc(uid);
-
-        docRef.get().then(function(doc) {
-            if (doc.exists) {
-                console.log("Document data:", doc.data());
-            } else {
-                // doc.data() will be undefined in this case
-                console.log("No such document!");
-            }
-        }).catch(function(error) {
-            console.log("Error getting document:", error);
-        });
-        //writeUserData('eop5emva3sfKnewQdYuIXvZ99G13', 'Paco', 'email@email.com', 'img.jpg');
-    } else {
-        console.log('user signed out')
-      // User is signed out.
-      // ...
-    }
-});*/
+// AUTh
+export const authObservable$ = authState(firebaseAuth);

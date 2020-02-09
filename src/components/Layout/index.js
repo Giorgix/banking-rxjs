@@ -5,8 +5,9 @@ import Head from 'next/head';
 // Utils
 import { compose } from 'ramda';
 
+
 // HOC
-import {withUserState} from '../../hoc';
+import { withConnectedProps } from '../../hoc';
 
 const layoutStyle = {
   margin: 20,
@@ -15,23 +16,25 @@ const layoutStyle = {
 };
 
 const enhace = compose(
-  withUserState
+  withConnectedProps(['user'])
 );
 
 const Navigation = enhace(NavBar);
 
-const Layout = props => (
-  <>
-  <Head>
-    <title>My styled page</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
-    <script src="/materialize.min.js" />
-  </Head>
-  <Navigation />
-  <div style={layoutStyle}>
-    {props.children}
-  </div>
-  </>
-);
+const Layout = props => {
+  return (
+    <>
+    <Head>
+      <title>My styled page</title>
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
+      <script src="/materialize.min.js" />
+    </Head>
+    <Navigation />
+    <div style={layoutStyle}>
+      {props.children}
+    </div>
+    </>
+  );
+}
 
 export default Layout;

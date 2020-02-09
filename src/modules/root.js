@@ -6,6 +6,7 @@ import getAccountsEpic from '../epics/getAccountsEpic';
 import getAccountEpic from '../epics/getAccountEpic';
 import logOutEpic from '../epics/logOutEpic';
 import logInEpic from '../epics/logInEpic';
+import getUserDataEpic from '../epics/getUserDataEpic';
 import { catchError } from 'rxjs/operators';
 
 
@@ -24,6 +25,7 @@ export const rootEpic = (action$, store$, dependencies) =>
     transactionLogEpic,
     logOutEpic,
     logInEpic,
+    getUserDataEpic,
     getAccountEpic,
   )(action$, store$, dependencies).pipe(
     catchError((error, source) => {
