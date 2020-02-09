@@ -21,37 +21,47 @@ import {
 } from '../hoc';
 
 
-const enhaceAccounts = compose(
+const enhanceAccounts = compose(
   withConnectedProps(['accounts', 'isFetching', 'lastUpdated']),
   branch(prop('isFetching'), Spinner),
   branch(({accounts, isFetching}) => !isFetching && isEmpty(accounts), NotFound),
   toList({className: 'accounts-list row'}),
 );
 
-const enhaceOperations = compose(
+const enhanceOperations = compose(
   withConnectedProps(['accounts', 'isFetching', 'lastUpdated']),
   branch(prop('isFetching'), Spinner),
   branch(({accounts, isFetching}) => !isFetching && isEmpty(accounts), NotFound),
 );
 
-const enhaceTransactions = compose(
+const enhanceTransactions = compose(
   withConnectedProps(['transactions', 'isFetching', 'lastUpdated']),
   branch(prop('isFetching'), Spinner),
   branch(({transactions, isFetching}) => !isFetching && isEmpty(transactions), NotFound),
 );
 
-const AccountsList = enhaceAccounts(AccountBalance);
-const Operations = enhaceOperations(ProductOperations)
-const TransactionsEnhace = enhaceTransactions(Transactions);
+const AccountsList = enhanceAccounts(AccountBalance);
+const Operations = enhanceOperations(ProductOperations)
+const TransactionsEnhance = enhanceTransactions(Transactions);
 
-const Index = ({isServer, requestAccounts, startInterest, stopInterest, initApp}) => {
+const IndexNotLogged = props => {
+  return(
+    <Layout>
+      <main>
+        <h3>NOT LOGGED</h3>
+      </main>
+    </Layout>
+  )
+}
+
+const Index = ({user, requestAccounts, startInterest, stopInterest, initApp}) => {
 
   useEffect(() => {
       stopInterest();
-      requestAccounts();
+      requestAccounts(user.id);
       startInterest();
       initApp();
-  }, [requestAccounts, startInterest, stopInterest, initApp]);
+  }, [requestAccounts, startInterest, stopInterest, initApp, user]);
 
   return (
     <Layout>
@@ -59,21 +69,23 @@ const Index = ({isServer, requestAccounts, startInterest, stopInterest, initApp}
         <AccountsList />
         <Operations />
         <div className="container">
-          <TransactionsEnhace />
+          <TransactionsEnhance />
         </div>
       </main>
     </Layout>
   )
 };
 
-const enhace = compose(
+const enhance = compose(
+  withAuthentication,
+  withConnectedProps(['user']),
   withConnectedActions(['requestAccounts', 'startInterest', 'stopInterest', 'initApp']),
-  withAuthentication
+  branch(({user}) => user === null, IndexNotLogged)
 )
 
-const enhaceIndex = enhace(Index);
-enhaceIndex.getInitialProps = async ({isServer, pathname, query}) => {
+const enhanceIndex = enhance(Index);
+enhanceIndex.getInitialProps = async ({isServer, pathname, query}) => {
   return { isServer };
 }
 
-export default enhaceIndex;
+export default enhanceIndex;
