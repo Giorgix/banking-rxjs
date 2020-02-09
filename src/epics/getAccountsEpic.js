@@ -15,8 +15,7 @@ export default (action$, state$) => action$.pipe(
         ofType(REQUEST_ACCOUNTS),
         delay(Math.trunc(Math.random() * (3000 - 500) + 500)),
         switchMap(action =>
-            collectionData(accountsRef, 'id').pipe(
-                tap(console.log),
+            collectionData(accountsRef.where("user_id", "==", action.payload), 'id').pipe(
                 timestamp(),
                 map(obj => ({data: [...obj.value], timestamp: obj.timestamp})),
                 map(payload => ({
