@@ -17,7 +17,6 @@ import {
     toList,
     withConnectedProps,
     withConnectedActions,
-    withUserState,
     withAuthentication
 } from '../hoc';
 
@@ -54,14 +53,8 @@ const Index = ({isServer, requestAccounts, startInterest, stopInterest, initApp}
       initApp();
   }, [requestAccounts, startInterest, stopInterest, initApp]);
 
-  /*useEffect(() => {
-      setTimeout(() => {
-          stopInterest();
-      }, 8000);
-  }, [stopInterest]);*/
   return (
     <Layout>
-    <div className="App">
       <main>
         <AccountsList />
         <Operations />
@@ -69,7 +62,6 @@ const Index = ({isServer, requestAccounts, startInterest, stopInterest, initApp}
           <TransactionsEnhace />
         </div>
       </main>
-    </div>
     </Layout>
   )
 };
@@ -85,9 +77,3 @@ enhaceIndex.getInitialProps = async ({isServer, pathname, query}) => {
 }
 
 export default enhaceIndex;
-
-/*export default connect(null, {
-  requestAccounts: requestAccounts,
-  startInterest: startInterest,
-  stopInterest: stopInterest,
-})(Index)*/
