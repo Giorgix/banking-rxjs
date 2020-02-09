@@ -4,13 +4,14 @@ import { ofType } from 'redux-observable';
 import { LOG_IN, LOGGED_IN, ERROR } from '../actions';
 // Firebase
 import {firebaseAuth} from '../firebase';
+import Router from 'next/router';
 
 
 export default (action$, state$) => action$.pipe(
         ofType(LOG_IN),
         switchMap(action =>
             from(firebaseAuth.signInWithEmailAndPassword(action.user, action.password)).pipe(
-                tap(console.log),
+                map(() => Router.push('/')),
                 map((data) => ({
                     type: LOGGED_IN,
                     user: data.user
@@ -18,8 +19,11 @@ export default (action$, state$) => action$.pipe(
                 })),
                 catchError(payload => [{
                     type: ERROR,
-                    error: true,
-                    payload
+                    hasError: true,
+                    error: {
+                        type: payload.name,
+                        message: payload.code
+                    }
                 }]),
             )
         )

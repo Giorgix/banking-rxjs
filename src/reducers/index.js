@@ -8,7 +8,8 @@ import {
     RECEIVE_ACCOUNT_REJECTED,
     LOGGED_OUT,
     LOGGED_IN,
-    SET_USER
+    SET_USER,
+    ERROR
 } from '../actions';
 
 // Utilities to make it easier to access certain values
@@ -16,6 +17,10 @@ const checkingLens = R.lensProp('accounts.checking');
 const savingsLens = R.lensProp('accounts.savings');
 const transactionsLens = R.lensProp('transactions');
 
+const withoutError = {
+    hasError: false,
+    error: null
+}
 
 export default function reducer (state = {
     accounts: {
@@ -62,7 +67,7 @@ export default function reducer (state = {
             return {
                 ...state,
                 isFetching: true,
-                didInvalidate: false
+                didInvalidate: false,
             }
         case RECEIVE_ACCOUNTS_FULLFILLED:
             return {
@@ -70,15 +75,16 @@ export default function reducer (state = {
                 isFetching: false,
                 didInvalidate: false,
                 accounts: action.accounts,
-                lastUpdated: action.receivedAt
+                lastUpdated: action.receivedAt,
+                ...withoutError
             }
         case RECEIVE_ACCOUNTS_REJECTED:
             return {
                 ...state,
                 isFetching: false,
                 didInvalidate: false,
-                error: action.payload,
-                hasError: action.error
+                error: action.error,
+                hasError: action.hasError
             }
         case RECEIVE_ACCOUNT_FULLFILLED:
 
@@ -88,6 +94,7 @@ export default function reducer (state = {
 
             newState = {
                 ...state,
+                ...withoutError
             };
             newState.accounts[accountIndex]= action.account;
             return {
@@ -101,12 +108,13 @@ export default function reducer (state = {
                 ...state,
                 isFetching: false,
                 didInvalidate: false,
-                error: action.payload,
-                hasError: action.error
+                error: action.error,
+                hasError: action.hasError
         }
         case LOGGED_OUT:
             newState = {
                 ...state,
+                ...withoutError
             };
             newState.accounts = [];
             newState.transactions = [];
@@ -115,9 +123,24 @@ export default function reducer (state = {
                 isFetching: false,
             }
         case LOGGED_IN:
-            return {...state}
+            return {
+                ...state,
+                ...withoutError
+            }
         case SET_USER:
-            return {...state, user: action.user}
+            return {
+                ...state,
+                user: action.user,
+                ...withoutError
+            }
+        case ERROR:
+            return {
+                ...state,
+                isFetching: false,
+                didInvalidate: false,
+                error: action.error,
+                hasError: action.hasError
+            }
         default:
             return state;
     }

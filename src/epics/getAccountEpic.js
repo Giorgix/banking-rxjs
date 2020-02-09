@@ -22,8 +22,11 @@ export default (action$, state$) => action$.pipe(
                 })),
                 catchError(payload => [{
                     type: 'RECEIVE_ACCOUNT_REJECTED',
-                    error: true,
-                    payload
+                    hasError: true,
+                    error: {
+                        type: payload.name,
+                        message: payload.code
+                    }
                 }])
             )
         )

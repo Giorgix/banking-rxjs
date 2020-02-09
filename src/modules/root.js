@@ -25,7 +25,7 @@ export const rootEpic = (action$, store$, dependencies) =>
     transactionLogEpic,
     logOutEpic,
     logInEpic,
-    getUserDataEpic,
+    //getUserDataEpic,
     getAccountEpic,
   )(action$, store$, dependencies).pipe(
     catchError((error, source) => {

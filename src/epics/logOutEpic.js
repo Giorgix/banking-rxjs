@@ -16,8 +16,11 @@ export default (action$, state$) => action$.pipe(
                 })),
                 catchError(payload => [{
                     type: ERROR,
-                    error: true,
-                    payload
+                    hasError: true,
+                    error: {
+                        type: payload.name,
+                        message: payload.code
+                    }
                 }]),
             )
         )
