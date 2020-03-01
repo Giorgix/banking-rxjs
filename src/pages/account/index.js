@@ -7,7 +7,6 @@ import { compose } from 'ramda';
 
 // HOC
 import {
-    withAuthentication,
     withAuthorization,
     withConnectedProps
 } from '../../hoc';
@@ -31,7 +30,6 @@ const Account = ({user}) => {
 };
 
 const enhanceAccount = compose(
-  withAuthentication,
   withAuthorization(true),
   withConnectedProps(['user'])
 )(Account)
