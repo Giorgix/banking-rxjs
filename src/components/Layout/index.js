@@ -9,7 +9,7 @@ import { compose } from 'ramda';
 
 
 // HOC
-import { withConnectedProps } from '../../hoc';
+import { withConnectedProps, withAuthentication } from '../../hoc';
 
 const layoutStyle = {
   margin: 20,
@@ -18,6 +18,7 @@ const layoutStyle = {
 };
 
 const enhance = compose(
+  withAuthentication,
   withConnectedProps(['user'])
 );
 

@@ -16,8 +16,7 @@ import {
     branch,
     toList,
     withConnectedProps,
-    withConnectedActions,
-    withAuthentication
+    withConnectedActions
 } from '../hoc';
 
 
@@ -25,7 +24,7 @@ const enhanceAccounts = compose(
   withConnectedProps(['accounts', 'isFetching', 'lastUpdated']),
   branch(prop('isFetching'), Spinner),
   branch(({accounts, isFetching}) => !isFetching && isEmpty(accounts), NotFound),
-  toList({className: 'accounts-list row'}),
+  toList({className: 'accounts-list row'}, 'accounts'),
 );
 
 const enhanceOperations = compose(
@@ -77,7 +76,6 @@ const Index = ({user, requestAccounts, startInterest, stopInterest, initApp}) =>
 };
 
 const enhance = compose(
-  withAuthentication,
   withConnectedProps(['user']),
   withConnectedActions(['requestAccounts', 'startInterest', 'stopInterest', 'initApp']),
   branch(({user}) => user === null, IndexNotLogged)

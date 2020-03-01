@@ -11,7 +11,6 @@ import { compose } from 'ramda';
 // HOC
 import {
   withConnectedActions,
-  withAuthentication,
   withConnectedProps
 } from '../../hoc';
 
@@ -38,8 +37,7 @@ const Login = ({logIn, user}) => {
 
 const enhanceLogin = compose(
   withConnectedActions(['logIn']),
-  withConnectedProps(['user']),
-  withAuthentication
+  withConnectedProps(['user'])
 )(Login);
 
 enhanceLogin.getInitialProps = async ({ store, isServer }) => {

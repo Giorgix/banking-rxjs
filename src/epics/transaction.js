@@ -1,6 +1,6 @@
 import { iif, of, throwError } from 'rxjs';
 import { ofType } from 'redux-observable';
-import { map, timestamp, mergeMap, mapTo, catchError } from 'rxjs/operators';
+import { map, timestamp, mergeMap, mapTo, catchError, tap } from 'rxjs/operators';
 
 class Transaction {
     constructor(account, amount, balance, type, timestamp) {
@@ -25,11 +25,12 @@ export default (action$, state$) => action$.pipe(
         ofType('WITHDRAW', 'DEPOSIT'),
         timestamp(),
         map(obj => ({...obj.value, timestamp: obj.timestamp,})),
+        tap(console.log),
         map(action => {
             const {accounts} = state$.value;
             return {
                 ...action,
-                balance: accounts.find((account) => parseInt(account.id) === parseInt(action.accountId)).balance || 0
+                balance: accounts.find((account) => String(account.id) === String(action.accountId)).balances[0].amount || 0
             }
         }),
         map(datedAction => (

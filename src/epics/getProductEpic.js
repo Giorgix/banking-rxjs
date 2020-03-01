@@ -9,7 +9,7 @@ export default (action$, state$) => action$.pipe(
         ofType('REQUEST_ACCOUNT'),
         delay(Math.trunc(Math.random() * (3000 - 500) + 500)),
         switchMap(action =>
-          doc(db.doc(`accounts/${action.accountId}`)).pipe(
+          doc(db.doc(`products/${action.accountId}`)).pipe(
               map(snapshot => ({id: snapshot.id, ...snapshot.data()})),
               timestamp(),
               map(obj => ({data: {...obj.value}, timestamp: obj.timestamp,})),

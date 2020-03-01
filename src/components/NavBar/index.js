@@ -54,7 +54,7 @@ function NavBar ({user, authObject, logOut}) {
       <React.Fragment>
         <li><Link href="/account"><a>Account</a></Link></li>
         <li><a href="badges.html">My Products</a></li>
-        <li><a href="collapsible.html">Add product</a></li>
+        <li><Link href="/product/add"><a>Add product</a></Link></li>
       </React.Fragment>
     )
   };

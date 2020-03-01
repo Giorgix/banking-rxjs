@@ -6,6 +6,12 @@ export const RECEIVE_ACCOUNTS_REJECTED = 'RECEIVE_ACCOUNTS_REJECTED';
 export const REQUEST_ACCOUNT = 'REQUEST_ACCOUNT';
 export const RECEIVE_ACCOUNT_FULLFILLED = 'RECEIVE_ACCOUNT_FULLFILLED';
 export const RECEIVE_ACCOUNT_REJECTED = 'RECEIVE_ACCOUNT_REJECTED';
+export const ADD_PRODUCT_FULLFILLED = 'ADD_PRODUCT_FULLFILLED';
+export const ADD_PRODUCT_REJECTED = 'ADD_PRODUCT_REJECTED';
+export const REQUEST_AVAILABLE_PRODUCTS = 'REQUEST_AVAILABLE_PRODUCTS';
+export const RECEIVE_AVAILABLE_PRODUCTS_FULLFILLED = 'RECEIVE_AVAILABLE_PRODUCTS_FULLFILLED';
+export const RECEIVE_AVAILABLE_PRODUCTS_REJECTED = 'RECEIVE_AVAILABLE_PRODUCTS_REJECTED';
+export const REQUEST_ADD_PRODUCT = 'REQUEST_ADD_PRODUCT';
 export const START_INTEREST = 'START_INTEREST';
 export const STOP_INTEREST = 'STOP_INTEREST';
 export const DEPOSIT = 'DEPOSIT';
@@ -90,5 +96,19 @@ export function setUser(user){
 export function logOut(payload){
     return {
         type: LOG_OUT
+    }
+}
+
+export function requestAvailableProducts (payload) {
+    return {
+        type: REQUEST_AVAILABLE_PRODUCTS,
+        payload
+    }
+}
+
+export function addProduct (payload) {
+    return {
+        type: REQUEST_ADD_PRODUCT,
+        payload
     }
 }

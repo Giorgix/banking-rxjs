@@ -1,10 +1,14 @@
 import * as R from 'ramda';
 import {
     RECEIVE_ACCOUNTS_FULLFILLED,
+    RECEIVE_ACCOUNTS_REJECTED,
+    REQUEST_AVAILABLE_PRODUCTS,
+    REQUEST_ADD_PRODUCT,
+    RECEIVE_AVAILABLE_PRODUCTS_FULLFILLED,
+    RECEIVE_AVAILABLE_PRODUCTS_REJECTED,
     REQUEST_ACCOUNTS,
     REQUEST_ACCOUNT,
     RECEIVE_ACCOUNT_FULLFILLED,
-    RECEIVE_ACCOUNTS_REJECTED,
     RECEIVE_ACCOUNT_REJECTED,
     LOGGED_OUT,
     LOGGED_IN,
@@ -44,7 +48,7 @@ export default function reducer (state = {
                 ...state,
                 accounts: [...state.accounts]
             };
-            newState.accounts[chosenAccountIndex].balance -= parseFloat(action.amount);
+            newState.accounts[chosenAccountIndex].balances[0].amount -= parseFloat(action.amount);
             return newState;
         case 'DEPOSIT':
             console.log('Depositing...');
@@ -52,12 +56,24 @@ export default function reducer (state = {
                 ...state,
                 accounts: [...state.accounts]
             };
-            newState.accounts[chosenAccountIndex].balance += parseFloat(action.amount);
+            newState.accounts[chosenAccountIndex].balances[0].amount += parseFloat(action.amount);
             return newState;
         case 'ADD_TRANSACTION':
             console.log('Adding transaction', action);
             return R.over(transactionsLens, R.prepend(action.datedTransaction), state);
         case REQUEST_ACCOUNTS:
+            return {
+                ...state,
+                isFetching: true,
+                didInvalidate: false
+            }
+        case REQUEST_AVAILABLE_PRODUCTS:
+            return {
+                ...state,
+                isFetching: true,
+                didInvalidate: false
+            }
+        case REQUEST_ADD_PRODUCT:
             return {
                 ...state,
                 isFetching: true,
@@ -79,6 +95,22 @@ export default function reducer (state = {
                 ...withoutError
             }
         case RECEIVE_ACCOUNTS_REJECTED:
+            return {
+                ...state,
+                isFetching: false,
+                didInvalidate: false,
+                error: action.error,
+                hasError: action.hasError
+            }
+        case RECEIVE_AVAILABLE_PRODUCTS_FULLFILLED:
+            return {
+                ...state,
+                isFetching: false,
+                didInvalidate: false,
+                availableProducts: action.availableProducts,
+                ...withoutError
+            }
+        case RECEIVE_AVAILABLE_PRODUCTS_REJECTED:
             return {
                 ...state,
                 isFetching: false,

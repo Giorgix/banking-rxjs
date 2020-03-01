@@ -9,7 +9,7 @@ import {
     RECEIVE_ACCOUNTS_REJECTED
 } from '../actions';
 
-const accountsRef = db.collection('accounts');
+const accountsRef = db.collection('products');
 
 export default (action$, state$) => action$.pipe(
         ofType(REQUEST_ACCOUNTS),

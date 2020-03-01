@@ -11,7 +11,7 @@ export default function ProductOperations (props) {
   const [transferAmount, setTransferAmount] = useState('');
 
   const accountOptionsFiltered = (selected = fromSelected) =>
-    props.accounts.filter(account => parseInt(account.id) !== parseInt(selected)).map(account => {
+    props.accounts.filter(account => String(account.id) !== String(selected)).map(account => {
     return (
       <option key={account.id} value={account.id}>{account.alias}</option>
     )

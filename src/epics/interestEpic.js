@@ -12,7 +12,7 @@ export default (action$, state$) => action$.pipe(
             map(() => ({
             type: DEPOSIT,
             accountId: state$.value.accounts[0].id,
-            amount: computeInterest(state$.value.accounts[0].balance)
+            amount: computeInterest(state$.value.accounts[0].balances[0].amount)
             })),
             takeUntil(
             action$.ofType(
