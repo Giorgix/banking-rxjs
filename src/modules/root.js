@@ -3,11 +3,13 @@ import reducer from '../reducers';
 import interestEpic from '../epics/interestEpic';
 import transactionLogEpic from '../epics/transaction';
 import getAccountsEpic from '../epics/getAccountsEpic';
+import getAvailableProductsEpic from '../epics/getAvailableProductsEpic';
 import getAccountEpic from '../epics/getAccountEpic';
 import logOutEpic from '../epics/logOutEpic';
 import logInEpic from '../epics/logInEpic';
 import signUpEpic from '../epics/signUpEpic';
 import signedUpEpic from '../epics/signedUpEpic';
+import addProductEpic from '../epics/addProductEpic';
 import getUserDataEpic from '../epics/getUserDataEpic';
 import { catchError } from 'rxjs/operators';
 
@@ -23,6 +25,8 @@ import { catchError } from 'rxjs/operators';
 export const rootEpic = (action$, store$, dependencies) =>
   combineEpics(
     getAccountsEpic,
+    getAvailableProductsEpic,
+    addProductEpic,
     interestEpic,
     transactionLogEpic,
     logOutEpic,
