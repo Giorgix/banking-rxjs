@@ -7,6 +7,7 @@ import { rootEpic, rootReducer } from '../modules/root';
 const initialState = {
   accounts: [],
   transactions: [],
+  availableProducts: [],
   isFetching: true,
   lastUpdated: Date.now(),
   user: null
