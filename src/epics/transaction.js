@@ -28,9 +28,11 @@ export default (action$, state$) => action$.pipe(
         tap(console.log),
         map(action => {
             const {accounts} = state$.value;
+            const selectedAccount = accounts.find((account) => String(account.id) === String(action.accountId));
             return {
                 ...action,
-                balance: accounts.find((account) => String(account.id) === String(action.accountId)).balances[0].amount || 0
+                alias: selectedAccount.alias,
+                balance: selectedAccount.balances[0].amount || 0
             }
         }),
         map(datedAction => (
