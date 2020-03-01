@@ -1,15 +1,15 @@
 import React from 'react';
 import { curry } from 'ramda';
 
-const toList = curry((options, BaseComponent) => (props) => {
+const toList = curry((options, iterableProp, BaseComponent) => (props) => {
     const {className} = options;
     return (
-        <div className={className}>
-            {props.accounts.map((data, i) => {
+        <ul className={className}>
+            {props[iterableProp].map((data, i) => {
                 const k = String(data.id || i);
-                return <BaseComponent dispatch={props.dispatch} {...data} key={k} />
+                return <BaseComponent {...props} {...data} key={k} />
             })}
-        </div>
+        </ul>
     )
 });
 
