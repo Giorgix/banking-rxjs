@@ -16,8 +16,8 @@ export default ({loginMethod}) => {
         <form onSubmit={onSubmit}>
             <input placeholder="Username or Email" type="text" onChange={(e) => setUser(e.target.value)} />
             <input placeholder="Password" type="password" onChange={(e) => setPassword(e.target.value)} />
-            <button disabled={isInvalid} class="btn waves-effect waves-light" type="submit" name="action">Log In
-                <i class="material-icons right">send</i>
+            <button disabled={isInvalid} className="btn waves-effect waves-light" type="submit" name="action">Log In
+                <i className="material-icons right">send</i>
             </button>
         </form>
     )
