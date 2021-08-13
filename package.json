@@ -9,7 +9,7 @@
     "@testing-library/user-event": "^7.1.2",
     "firebase": "^7.7.0",
     "materialize-css": "^1.0.0",
-    "next": "^9.2.1",
+    "next": "^11.1.0",
     "next-redux-wrapper": "^4.0.1",
     "ramda": "^0.26.1",
     "react": "^16.12.0",
